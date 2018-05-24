@@ -1,9 +1,14 @@
 package com.palmarLibrary.bean;
 
+
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.crypto.Data;
+
+
 
 @Entity
 @Table(name="read")
@@ -12,8 +17,8 @@ public class Read {
 	private String userId;
 	@Id
 	private int bookId;
-	private Data borrowData;
-	private Data returnData;
+	private Date borrowDate;
+	private Date returnDate;
 	public String getUserId() {
 		return userId;
 	}
@@ -26,17 +31,17 @@ public class Read {
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
-	public Data getBorrowData() {
-		return borrowData;
+	public Date getBorrowDate() {
+		return borrowDate;
 	}
-	public void setBorrowData(Data borrowData) {
-		this.borrowData = borrowData;
+	public void setBorrowDate(Date borrowDate) {
+		this.borrowDate = borrowDate;
 	}
-	public Data getReturnData() {
-		return returnData;
+	public Date getReturnDate() {
+		return returnDate;
 	}
-	public void setReturnData(Data returnData) {
-		this.returnData = returnData;
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
 	}
 	
 }
