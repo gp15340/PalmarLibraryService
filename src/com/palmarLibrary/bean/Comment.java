@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,8 +16,12 @@ public class Comment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int commentId;
-	private String userId;
-	private String indexId;
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private User user;
+	@ManyToOne
+	@JoinColumn(name="indexId")
+	private Book book;
 	private String content;
 	private Date commentTime;
 	public int getCommentId() {
@@ -24,17 +30,17 @@ public class Comment {
 	public void setCommentId(int commentId) {
 		this.commentId = commentId;
 	}
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	public String getIndexId() {
-		return indexId;
+	public Book getBook() {
+		return book;
 	}
-	public void setIndexId(String indexId) {
-		this.indexId = indexId;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 	public String getContent() {
 		return content;
@@ -49,6 +55,4 @@ public class Comment {
 		this.commentTime = commentTime;
 	}
 	
-	
-
 }

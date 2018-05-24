@@ -5,34 +5,38 @@ import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.crypto.Data;
-
-
 
 @Entity
 @Table(name="read")
 public class Read {
 	@Id
-	private String userId;
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private User user;
 	@Id
-	private int bookId;
+	@ManyToOne
+	@JoinColumn(name="bookId")
+	private OnlyBook onlyBook;
 	private Date borrowDate;
 	private Date returnDate;
-	public String getUserId() {
-		return userId;
+	
+	public User getUser() {
+		return user;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public int getBookId() {
-		return bookId;
-	}
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Date getBorrowDate() {
 		return borrowDate;
+	}
+	public OnlyBook getOnlyBook() {
+		return onlyBook;
+	}
+	public void setOnlyBook(OnlyBook onlyBook) {
+		this.onlyBook = onlyBook;
 	}
 	public void setBorrowDate(Date borrowDate) {
 		this.borrowDate = borrowDate;

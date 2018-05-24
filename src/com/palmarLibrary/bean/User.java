@@ -1,8 +1,12 @@
 package com.palmarLibrary.bean;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +21,22 @@ public class User {
 	private String nickname;
 	private String email;
 	private String imgUrl;
+	@OneToMany(mappedBy="user",targetEntity=Comment.class,cascade=CascadeType.ALL)
+	private Set<Comment> comments;
+	@OneToMany(mappedBy="user",targetEntity=Borrow.class,cascade=CascadeType.ALL)
+	private Set<Borrow> borrows;
+	public Set<Borrow> getBorrows() {
+		return borrows;
+	}
+	public void setBorrows(Set<Borrow> borrows) {
+		this.borrows = borrows;
+	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 	public School getSchool() {
 		return school;
 	}
@@ -66,8 +86,5 @@ public class User {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	
-	
-	
 
 }

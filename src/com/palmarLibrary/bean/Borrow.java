@@ -2,33 +2,39 @@ package com.palmarLibrary.bean;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="comment")
+@Table(name="borrow")
 public class Borrow {
 
 	@Id
-	private String userId;
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private User user;
 	@Id
-	private int bookId;
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="bookId")
+	private OnlyBook onlyBook;
 	private Date borrowDate;
 	private Date returnDate;
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	public int getBookId() {
-		return bookId;
+	public OnlyBook getOnlyBook() {
+		return onlyBook;
 	}
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
+	public void setOnlyBook(OnlyBook onlyBook) {
+		this.onlyBook = onlyBook;
 	}
 	public Date getBorrowDate() {
 		return borrowDate;
