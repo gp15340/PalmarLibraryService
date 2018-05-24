@@ -13,40 +13,40 @@ import javax.persistence.Table;
 public class Comment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int commentid;
-	private String userid;
-	private String indexid;
-	private String comment;
-	private Date date;
-	public int getCommentid() {
-		return commentid;
+	private int commentId;
+	private String userId;
+	private String indexId;
+	private String content;
+	private Date commentTime;
+	public int getCommentId() {
+		return commentId;
 	}
-	public void setCommentid(int commentid) {
-		this.commentid = commentid;
+	public void setCommentId(int commentId) {
+		this.commentId = commentId;
 	}
-	public String getUserid() {
-		return userid;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getIndexid() {
-		return indexid;
+	public String getIndexId() {
+		return indexId;
 	}
-	public void setIndexid(String indexid) {
-		this.indexid = indexid;
+	public void setIndexId(String indexId) {
+		this.indexId = indexId;
 	}
-	public String getComment() {
-		return comment;
+	public String getContent() {
+		return content;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public Date getDate() {
-		return date;
+	public Date getCommentTime() {
+		return commentTime;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCommentTime(Date commentTime) {
+		this.commentTime = commentTime;
 	}
 	
 	

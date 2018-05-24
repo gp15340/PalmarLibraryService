@@ -11,37 +11,37 @@ import javax.persistence.Table;
 public class Book {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int bookid;
-	private String indexid;
-	private String bookname;
+	private int bookId;
+	private String indexId;
+	private String bookName;
 	private String author;
-	private String img;
-	private String isbn;
+	private String imgUrl;
+	private String ISBN;
 	private int price;
-	private String press;
-	private String morphological;//xingtai
-	private String series_items;//congbian
-	private String collection;
+	private String publisher;
+	private String shape;//xingtai
+	private String series;//congbian
+	private String location;
 	
-	private String borrowing;
+	private String status;
 	private int hot;
-	public int getBookid() {
-		return bookid;
+	public int getBookId() {
+		return bookId;
 	}
-	public void setBookid(int bookid) {
-		this.bookid = bookid;
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
 	}
-	public String getIndexid() {
-		return indexid;
+	public String getIndexId() {
+		return indexId;
 	}
-	public void setIndexid(String indexid) {
-		this.indexid = indexid;
+	public void setIndexId(String indexId) {
+		this.indexId = indexId;
 	}
-	public String getBookname() {
-		return bookname;
+	public String getBookName() {
+		return bookName;
 	}
-	public void setBookname(String bookname) {
-		this.bookname = bookname;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 	public String getAuthor() {
 		return author;
@@ -49,17 +49,17 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public String getImg() {
-		return img;
+	public String getImgUrl() {
+		return imgUrl;
 	}
-	public void setImg(String img) {
-		this.img = img;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
-	public String getIsbn() {
-		return isbn;
+	public String getISBN() {
+		return ISBN;
 	}
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setISBN(String iSBN) {
+		ISBN = iSBN;
 	}
 	public int getPrice() {
 		return price;
@@ -67,35 +67,35 @@ public class Book {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getPress() {
-		return press;
+	public String getPublisher() {
+		return publisher;
 	}
-	public void setPress(String press) {
-		this.press = press;
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
 	}
-	public String getMorphological() {
-		return morphological;
+	public String getShape() {
+		return shape;
 	}
-	public void setMorphological(String morphological) {
-		this.morphological = morphological;
+	public void setShape(String shape) {
+		this.shape = shape;
 	}
-	public String getSeries_items() {
-		return series_items;
+	public String getSeries() {
+		return series;
 	}
-	public void setSeries_items(String series_items) {
-		this.series_items = series_items;
+	public void setSeries(String series) {
+		this.series = series;
 	}
-	public String getCollection() {
-		return collection;
+	public String getLocation() {
+		return location;
 	}
-	public void setCollection(String collection) {
-		this.collection = collection;
+	public void setLocation(String location) {
+		this.location = location;
 	}
-	public String getBorrowing() {
-		return borrowing;
+	public String getStatus() {
+		return status;
 	}
-	public void setBorrowing(String borrowing) {
-		this.borrowing = borrowing;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public int getHot() {
 		return hot;
@@ -103,5 +103,6 @@ public class Book {
 	public void setHot(int hot) {
 		this.hot = hot;
 	}
+	
 
 }
