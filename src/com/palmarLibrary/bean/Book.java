@@ -28,6 +28,8 @@ public class Book {
 	private String location;
 	private String status;
 	private int hot;
+	@OneToMany(mappedBy="book",targetEntity=OnlyBook.class,cascade=CascadeType.ALL)
+	private Set<OnlyBook> onlybooks;
 	@ManyToMany
 	@JoinTable(name="booktype",
 	joinColumns=@JoinColumn(name="indexId"),
@@ -35,8 +37,6 @@ public class Book {
 	private Set<BookType> types;
 	@OneToMany(mappedBy="book",targetEntity=Comment.class,cascade=CascadeType.ALL)
 	private Set<Comment> comments;
-	@OneToOne(mappedBy="book")
-	private Borrow borrow; 
 	public String getIndexId() {
 		return indexId;
 	}

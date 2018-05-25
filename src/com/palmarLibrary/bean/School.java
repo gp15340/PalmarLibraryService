@@ -1,7 +1,11 @@
 package com.palmarLibrary.bean;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +16,8 @@ public class School {
 	private String schoolName;
 	private String province;
 	private String imgUrl;
+	@OneToMany(mappedBy="school",targetEntity=User.class,cascade=CascadeType.ALL)
+	private Set<User> users;
 	public String getSchoolId() {
 		return schoolId;
 	}

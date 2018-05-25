@@ -4,6 +4,8 @@ package com.palmarLibrary.bean;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,16 +15,23 @@ import javax.persistence.Table;
 @Table(name="read")
 public class Read {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int readId;
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private User user;
-	@Id
 	@ManyToOne
 	@JoinColumn(name="bookId")
 	private OnlyBook onlyBook;
 	private Date borrowDate;
 	private Date returnDate;
 	
+	public int getReadId() {
+		return readId;
+	}
+	public void setReadId(int readId) {
+		this.readId = readId;
+	}
 	public User getUser() {
 		return user;
 	}

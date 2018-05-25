@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,16 +23,13 @@ public class User {
 	private String nickname;
 	private String email;
 	private String imgUrl;
+	@ManyToOne
+	@JoinColumn(name="schoolId")
+	private School school;
 	@OneToMany(mappedBy="user",targetEntity=Comment.class,cascade=CascadeType.ALL)
 	private Set<Comment> comments;
 	@OneToMany(mappedBy="user",targetEntity=Borrow.class,cascade=CascadeType.ALL)
 	private Set<Borrow> borrows;
-	public Set<Borrow> getBorrows() {
-		return borrows;
-	}
-	public void setBorrows(Set<Borrow> borrows) {
-		this.borrows = borrows;
-	}
 	public Set<Comment> getComments() {
 		return comments;
 	}
@@ -43,7 +42,7 @@ public class User {
 	public void setSchool(School school) {
 		this.school = school;
 	}
-	private School school;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -86,5 +85,12 @@ public class User {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-
+	public Set<Borrow> getBorrows() {
+		return borrows;
+	}
+	public void setBorrows(Set<Borrow> borrows) {
+		this.borrows = borrows;
+	}
+	
+	
 }
