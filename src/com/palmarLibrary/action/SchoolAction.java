@@ -18,8 +18,8 @@ public class SchoolAction {
 	@Autowired
 	private SchoolService schoolService;
 	
+	@RequestMapping(value="/getProvince",produces = "application/json; charset=utf-8")
 	@ResponseBody
-	@RequestMapping(value="getProvince",produces = "application/json; charset=utf-8")
 	public String getProvince() {
 		List<String> list = schoolService.getProvince();
 		Gson gson = new Gson();
@@ -29,7 +29,7 @@ public class SchoolAction {
 		return listStr;
 	}
 	
-	@RequestMapping("getSchool")
+	@RequestMapping(value="/getSchool",produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String getSchool(String province) {
 		System.out.println(province);
