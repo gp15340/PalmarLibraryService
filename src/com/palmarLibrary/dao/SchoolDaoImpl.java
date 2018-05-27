@@ -23,5 +23,13 @@ public class SchoolDaoImpl implements SchoolDao {
 		List<String> list = query.list();
 		return list;
 	}
+	@Override
+	public List<String> getSchool(String province) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select schoolName from School where province=?");
+		query.setString(0, province);
+		List<String> list = query.list();
+		return list;
+	}
 
 }

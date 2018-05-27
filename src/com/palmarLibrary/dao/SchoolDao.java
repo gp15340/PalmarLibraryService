@@ -6,4 +6,6 @@ import com.palmarLibrary.bean.School;
 
 public interface SchoolDao {
 	public List<String> getProvince();
+
+	public List<String> getSchool(String province);
 }

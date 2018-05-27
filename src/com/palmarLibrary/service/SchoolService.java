@@ -17,4 +17,9 @@ public class SchoolService {
 		List<String> list = schoolDao.getProvince();
 		return list;
 	}
+
+	public List<String> getSchool(String province) {
+		List<String> list = schoolDao.getSchool(province);
+		return list;
+	}
 }
