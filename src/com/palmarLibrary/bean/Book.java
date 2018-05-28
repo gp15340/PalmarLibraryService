@@ -20,7 +20,7 @@ public class Book {
 	private String bookName;
 	private String author;
 	private String imgUrl;
-	private String ISBN;
+	private String isbn;
 	private int price;
 	private String publisher;
 	private String shape;//xingtai
@@ -60,12 +60,6 @@ public class Book {
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
-	}
-	public String getISBN() {
-		return ISBN;
-	}
-	public void setISBN(String iSBN) {
-		ISBN = iSBN;
 	}
 	public int getPrice() {
 		return price;
@@ -108,6 +102,12 @@ public class Book {
 	}
 	public void setHot(int hot) {
 		this.hot = hot;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 	
 
