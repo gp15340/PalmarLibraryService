@@ -4,6 +4,11 @@ import com.palmarLibrary.bean.User;
 
 public interface UserDao {
 
-	boolean login(User user);
+
+	boolean judge(User user, String schoolId);
+
+	boolean register(User user);
+
+	String Login(User user, String schoolId);
 
 }

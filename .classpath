@@ -45,5 +45,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-portlet-4.3.7.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-websocket-4.3.7.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="lib" path="E:/Java/JavaSEJDK/apache-tomcat-8.5.20-windows-x64/apache-tomcat-8.5.20/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

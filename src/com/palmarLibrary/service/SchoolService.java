@@ -12,14 +12,5 @@ import com.palmarLibrary.dao.SchoolDao;
 public class SchoolService {
 	@Autowired
 	private SchoolDao schoolDao;
-	
-	public List<String> getProvince(){
-		List<String> list = schoolDao.getProvince();
-		return list;
-	}
 
-	public List<String> getSchool(String province) {
-		List<String> list = schoolDao.getSchool(province);
-		return list;
-	}
 }

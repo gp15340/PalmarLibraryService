@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Table(name="type")
 public class BookType {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer typeId;
 	private String typeName;
 	@ManyToMany(mappedBy="types")
