@@ -14,6 +14,14 @@ import com.palmarLibrary.bean.User;
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
+	@Override
+	public User getUser(String userId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from User where userId = ?");
+		query.setString(0, userId);
+		User user = (User)query.uniqueResult();
+		return user;
+	}
 
 	@Override
 	public boolean judge(User user, String schoolId) {

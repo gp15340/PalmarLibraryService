@@ -13,5 +13,6 @@ public interface UserDao {
 	
 	String Login(User user, String schoolId);
 	
+	User getUser(String userId);
 
 }

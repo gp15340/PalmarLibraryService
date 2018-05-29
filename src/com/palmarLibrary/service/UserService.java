@@ -52,6 +52,9 @@ public class UserService {
 		return msg;
 	}
 
-	
+	public User getUser(String userId) {
+		User user = userDao.getUser(userId);
+		return user;
+	}
 
 }

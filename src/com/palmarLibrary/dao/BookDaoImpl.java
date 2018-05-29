@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
+import com.palmarLibrary.bean.User;
 
 @Repository
 @Transactional
@@ -74,6 +75,55 @@ public class BookDaoImpl implements BookDao {
 		}		
 
 		return list0;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getBorrowRecords(User user) {
+		System.out.println(user.getUserId());
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select b.onlyBook.bookId,b.borrowDate,b.returnDate,b.borrowNumber from Borrow b where userId=?");
+		query.setParameter(0, user.getUserId());
+		List<Object[]> bookList = query.list();
+		System.out.println("" + bookList.size());
+		List<Map<String,Object>> list = new ArrayList();
+		for (Object[] object : bookList) {
+			Map map = new HashMap();
+			map.put("bookId",object[0]);
+			map.put("borrowDate",object[1]);
+			map.put("returnDate",object[2]);
+			map.put("number", object[3]);
+			list.add(map);
+		}
+		
+		return list;
+	}
+
+	@Override
+	public String getBook(Object object) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select o.book.indexId from OnlyBook o where bookId=?");
+		query.setParameter(0, object);
+		String indexId = (String) query.uniqueResult();
+		
+		return indexId;
+	}
+
+	@Override
+	public List<Map<String, Object>> getBorrowBook(String indexId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select bookName,author from Book where indexId = ?");
+		query.setString(0, indexId);
+		List<Object[]> bookList = query.list();
+		List<Map<String,Object>> list = new ArrayList();
+		for (Object[] object : bookList) {
+			Map map = new HashMap();
+			map.put("bookName", object[0]);
+			map.put("author",object[1]);
+			list.add(map);
+		}
+		return list;
 	}
 
 }

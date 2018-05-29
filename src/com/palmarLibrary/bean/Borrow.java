@@ -26,6 +26,13 @@ public class Borrow{
 	private OnlyBook onlyBook;
 	private Date borrowDate;
 	private Date returnDate;
+	private int borrowNumber;
+	public int getBorrowNumber() {
+		return borrowNumber;
+	}
+	public void setBorrowNumber(int borrowNumber) {
+		this.borrowNumber = borrowNumber;
+	}
 	public Date getBorrowDate() {
 		return borrowDate;
 	}

@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.palmarLibrary.bean.Book;
+import com.palmarLibrary.bean.User;
 import com.palmarLibrary.service.BookService;
+import com.palmarLibrary.service.UserService;
 
 @Controller
 public class BookAction {
 	@Autowired
 	private BookService bookService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping("getHotBook")
 	@ResponseBody
@@ -45,5 +49,16 @@ public class BookAction {
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return bookListStr;
+	}
+	@RequestMapping("getBorrowRecords")
+	@ResponseBody
+	public String getBorrowRecords(String userId) {
+		User user = userService.getUser(userId);
+		List<Map<String,Object>> bookList = bookService.getBorrowRecords(user);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println(bookListStr);
+		return  bookListStr;
 	}
 }
