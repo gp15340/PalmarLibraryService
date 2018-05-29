@@ -7,4 +7,5 @@ import com.palmarLibrary.bean.Book;
 
 public interface BookDao {
 	List<Map<String,Object>> getHotBook();
+	List<Map<String,Object>> getBookDetails(Book book);
 }

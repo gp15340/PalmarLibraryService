@@ -26,6 +26,25 @@ public class UserService {
 		}
 		return false;
 	}
+	
+	public boolean Settinger(User user) {
+
+
+			boolean res = userDao.setting(user);
+			if (res) {
+				return true;
+			}
+			return false;
+		
+	}
+	public boolean upload(User user) {
+		boolean res = userDao.upload(user);
+		if (res) {
+			return true;
+		}
+		return false;
+		
+	};
 
 	public String Login(User user, String schoolName) {
 		String schoolId = schoolDao.getSchoolId(schoolName);

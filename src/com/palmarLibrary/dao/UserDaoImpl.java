@@ -42,6 +42,8 @@ public class UserDaoImpl implements UserDao {
 			return true;
 		return false;
 	}
+	
+	
 
 	@Override
 	public String Login(User user, String schoolId) {
@@ -60,4 +62,41 @@ public class UserDaoImpl implements UserDao {
 		}
 		return "fail";
 	}
+
+	@Override
+	public boolean setting(User user) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("update User set nickname = ?,userName = ?,department = ?,email = ? "
+				+ "where UserId=?");
+		query.setString(0,user.getNickname());
+		query.setString(1, user.getUserName());
+		query.setString(2,user.getDepartment());
+		query.setString(3,user.getEmail());
+		query.setString(4,user.getUserId());
+		int res = query.executeUpdate();
+		if (res > 0)
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean upload(User user) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("update User set imgUrl = ? "
+				+ "where UserId=?");
+		query.setString(0,user.getImgUrl());
+		query.setString(1,user.getUserId());
+		int res = query.executeUpdate();
+		if (res > 0)
+			return true;
+		return false;
+	}
+
+	
+
+
+
+	
 }	

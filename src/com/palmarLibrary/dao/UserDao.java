@@ -8,7 +8,10 @@ public interface UserDao {
 	boolean judge(User user, String schoolId);
 
 	boolean register(User user);
-
+	boolean setting(User user);
+	boolean upload(User user);
+	
 	String Login(User user, String schoolId);
+	
 
 }

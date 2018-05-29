@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,21 @@ public class BookAction {
 	@ResponseBody
 	public String GetHotBook(){
 		List<Map<String,Object>> bookList = bookService.getHotBook();
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println(bookListStr);
+		return bookListStr;
+	}
+	
+	@RequestMapping("getBookDetails")
+	@ResponseBody
+	public String GetBookDetails(String bookName,String author,
+			HttpSession session){
+		Book book = new Book();
+		book.setBookName(bookName);
+		book.setAuthor(author);
+		List<Map<String,Object>> bookList = bookService.getBookDetails(book);
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<Book>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);
