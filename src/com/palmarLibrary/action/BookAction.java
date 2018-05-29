@@ -43,12 +43,9 @@ public class BookAction {
 		Book book = new Book();
 		book.setBookName(bookName);
 		book.setAuthor(author);
-		List<Map<String,Object>> bookList = bookService.getBookDetails(book);
-		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
-		String bookListStr = gson.toJson(bookList,type);
-		System.out.println(bookListStr);
-		return bookListStr;
+		String bookList = bookService.getBookDetails(book);
+		System.out.println(bookList);
+		return bookList;
 	}
 	@RequestMapping("getBorrowRecords")
 	@ResponseBody

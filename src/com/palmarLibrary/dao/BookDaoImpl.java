@@ -1,5 +1,6 @@
 package com.palmarLibrary.dao;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
 import com.palmarLibrary.bean.User;
@@ -40,41 +42,40 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getBookDetails(Book book) {
+	public String getBookDetails(Book book) {
 		// TODO Auto-generated method stub
 		String str = null;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select b from Book b"+"where bookName = ? and author = ?");
+		Query query = session.createQuery("select b from Book b"+"where b.bookName = ? and b.author = ?");
 		query.setString(0,book.getBookName());
 		query.setString(1, book.getAuthor());
 		Book book1 = (Book)query;
 		Query query1 = session.createQuery("select b.types from book b where b.indexId= ? ");
+		query1.setString(0, book1.getIndexId());
 		List list = query1.list();
-		for (int i=0;i<list.size(); i++)
-		{
+		for (int i=0;i<list.size(); i++){
 		    BookType stu = (BookType)list.get(i);
-		    str += (String)stu.getTypeName();
+		    str = (String)stu.getTypeName() + "-" + str;
 		}
-		List<Object[]> bookList = query.list();
-		List<Map<String,Object>> list0 = new ArrayList();
-		for (Object[] object : bookList) {
-		Map map = new HashMap();
-		map.put("indexId", object[0]);
-		map.put("bookName", object[1]);
-		map.put("author", object[2]);
-		map.put("publisher",object[3]);
-		map.put("ISBN", object[4]);
-		map.put("price", object[5]);
-		map.put("shape", object[6]);
-		map.put("series", object[7]);
-		map.put("location", object[8]);
-		map.put("imgUrl", object[9]);
-		map.put("hot", object[10]);
+		Map<String,Object> map = new HashMap();
+		map.put("indexId", book1.getIndexId());
+		map.put("bookName", book1.getBookName());
+		map.put("author", book1.getAuthor());
+		map.put("publisher",book1.getPublisher());
+		map.put("ISBN", book1.getIsbn());
+		map.put("price", book1.getPrice());
+		map.put("shape", book1.getShape());
+		map.put("series", book1.getSeries());
+		map.put("location", book1.getLocation());
+		map.put("imgUrl", book1.getImgUrl());
+		map.put("hot", book1.getHot());
 		map.put("typename", str);
-		list0.add(map);
-		}		
-
-		return list0;
+		
+		Gson gson = new Gson();
+		Type type = new TypeToken<Map<String,Object>>(){}.getType();
+		String bookStr = gson.toJson(map,type);
+		return bookStr;
+		
 	}
 	
 	@Override

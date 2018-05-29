@@ -1,5 +1,9 @@
 package com.palmarLibrary.dao;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.palmarLibrary.bean.User;
 
 @Repository
@@ -66,7 +72,16 @@ public class UserDaoImpl implements UserDao {
 			if (u.getNickname() == null) {
 				return "noUser";
 			}
-			return "success";
+			Map map = new HashMap();
+			map.put("userId", u.getUserId());
+			map.put("nickname", u.getNickname());
+			map.put("department", u.getDepartment());
+			map.put("userName",u.getUserName());
+			map.put("email", u.getEmail());
+			Gson gson = new Gson();
+			Type type = new TypeToken<Map<String,Object>>(){}.getType();
+			String userStr = gson.toJson(map,type);
+			return userStr;
 		}
 		return "fail";
 	}

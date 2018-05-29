@@ -53,16 +53,17 @@ public class UserAction {
 		}
 	}
 	
-	@RequestMapping("setting")
+	@RequestMapping("usersetting")
 	@ResponseBody
-	public String Setting(String department,String nickname,String userName,String userId,
+	public String Setting(String userId,String nickname,String userName,String department,
 			String email,HttpSession session) {
+		System.out.println(email);
 		User user = new User();
 		user.setDepartment(department);
 		user.setNickname(nickname);
 		user.setUserName(userName);
 		user.setUserId(userId);
-		user.setPassword(email);
+		user.setEmail(email);
 		boolean flag = userService.Settinger(user);
 		if (flag) {
 			System.out.println("success");
@@ -74,16 +75,19 @@ public class UserAction {
 		}
 	}
 	
-	@RequestMapping("uploadfile")
+	@RequestMapping("uploadFile")
 	@ResponseBody
-	public String uploadfile(User user,@RequestParam(value="files") MultipartFile file,HttpSession session) {
+	public String uploadfile(String userStr,@RequestParam(value="files") MultipartFile file,HttpSession session) {
+		System.out.println("123");
+		Gson gson = new Gson();
+		User user = gson.fromJson(userStr, User.class);
 		String filePath = null;
 		 if (!file.isEmpty()) {  
 	            try {  
-	                // ÎÄ¼þ±£´æÂ·¾¶  
+	                // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½  
 	              filePath = session.getServletContext().getRealPath("/") + "img/"  
 	                        + file.getOriginalFilename();  
-	                // ×ª´æÎÄ¼þ  
+	                // ×ªï¿½ï¿½ï¿½Ä¼ï¿½  
 	                file.transferTo(new File(filePath));  
 	                user.setImgUrl(filePath);
 	            } catch (Exception e) {  
@@ -119,9 +123,9 @@ public class UserAction {
 			case "fail":
 				msgRtn = "fail";
 				break;
-			case "success":
+			default:
 				session.setAttribute("user", user);
-				msgRtn = "success";
+				msgRtn = msg;
 				break;
 		}
 		return msgRtn;

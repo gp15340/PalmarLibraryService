@@ -8,7 +8,7 @@ import com.palmarLibrary.bean.User;
 
 public interface BookDao {
 	List<Map<String,Object>> getHotBook();
-	List<Map<String,Object>> getBookDetails(Book book);
+	String getBookDetails(Book book);
 	List<Map<String, Object>> getBorrowRecords(User user);
 
 	String getBook(Object object);
