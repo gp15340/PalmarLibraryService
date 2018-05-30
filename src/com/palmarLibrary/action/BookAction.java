@@ -1,6 +1,8 @@
 package com.palmarLibrary.action;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -66,18 +68,18 @@ public class BookAction {
 	public String GetHotBook(){
 		List<Map<String,Object>> bookList = bookService.getHotBook();
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return bookListStr;
 	}
 	
-	@RequestMapping("getauthor")
+	@RequestMapping("getAuthor")
 	@ResponseBody
 	public String Getauthor(){
-		List<Map<String,Object>> bookList = bookService.getauthor();
+		List<String> bookList = bookService.getauthor();
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
+		Type type = new TypeToken<List<String>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return bookListStr;
@@ -89,8 +91,8 @@ public class BookAction {
 			HttpSession session){
 		Book book = new Book();
 		book.setBookName(bookName);
-		book.setAuthor(author);
-		String bookList = bookService.getBookDetails(book);
+		//book.setAuthor(author);
+		String bookList = bookService.getBookDetails(book,author);
 		System.out.println(bookList);
 		return bookList;
 	}
@@ -120,5 +122,18 @@ public class BookAction {
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return  bookListStr;
+	}
+	
+	@RequestMapping("insertComment")
+	@ResponseBody
+	public String insertComment(String userId,String indexId,String content) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = df.format(new Date());
+		boolean flag = bookService.insertComment(userId,indexId,content,time);
+		if (flag) {
+			return "success";
+		}
+		return "fail";
+		
 	}
 }
