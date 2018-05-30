@@ -36,8 +36,8 @@ public class BookService {
 	}
 	
 
-	public List<Map<String,Object>> getauthor(){
-		List<Map<String,Object>> bookList = bookDao.getauthor();
+	public List<String> getauthor(){
+		List<String> bookList = bookDao.getauthor();
 		return bookList;
 	}
 

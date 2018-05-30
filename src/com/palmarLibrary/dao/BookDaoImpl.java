@@ -43,15 +43,13 @@ public class BookDaoImpl implements BookDao {
 	}
 	
 	@Override
-	public List<Map<String,Object>> getauthor() {
+	public List<String> getauthor() {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("select author from Book ");
-		List<Object[]> bookList = query.list();
-		List<Map<String,Object>> list = new ArrayList();
-		for (Object[] object : bookList) {
-			Map map = new HashMap();
-			map.put("author",object[0]);
-			list.add(map);
+		List<String> bookList = query.list();
+		List<String> list = new ArrayList();
+		for (String str : bookList) {
+			list.add(str);
 		}
 		return list;
 	}
