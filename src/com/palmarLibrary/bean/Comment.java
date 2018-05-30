@@ -23,7 +23,7 @@ public class Comment {
 	@JoinColumn(name="indexId")
 	private Book book;
 	private String content;
-	private Date commentTime;
+	private String commentTime;
 	public int getCommentId() {
 		return commentId;
 	}
@@ -39,6 +39,12 @@ public class Comment {
 	public Book getBook() {
 		return book;
 	}
+	public String getCommentTime() {
+		return commentTime;
+	}
+	public void setCommentTime(String commentTime) {
+		this.commentTime = commentTime;
+	}
 	public void setBook(Book book) {
 		this.book = book;
 	}
@@ -48,11 +54,7 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getCommentTime() {
-		return commentTime;
-	}
-	public void setCommentTime(Date commentTime) {
-		this.commentTime = commentTime;
-	}
+	
+	
 	
 }

@@ -1,6 +1,8 @@
 package com.palmarLibrary.action;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -104,5 +106,18 @@ public class BookAction {
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return  bookListStr;
+	}
+	
+	@RequestMapping("insertComment")
+	@ResponseBody
+	public String insertComment(String userId,String indexId,String content) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = df.format(new Date());
+		boolean flag = bookService.insertComment(userId,indexId,content,time);
+		if (flag) {
+			return "success";
+		}
+		return "fail";
+		
 	}
 }

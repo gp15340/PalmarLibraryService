@@ -174,5 +174,22 @@ public class BookDaoImpl implements BookDao {
 		return null;
 	}
 
+	@Override
+	public Book getBookByIndexId(String indexId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Book where indexId = ?");
+		Book book = (Book) query.uniqueResult();
+		return book;
+	}
+
+	@Override
+	public boolean insertComment(Comment comment) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		session.save(comment);
+		return true;
+	}
+
 
 }
