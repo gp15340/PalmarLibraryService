@@ -87,4 +87,5 @@ public class BookService {
 		boolean flag = bookDao.insertComment(comment);
 		return flag;
 	}
+	
 }

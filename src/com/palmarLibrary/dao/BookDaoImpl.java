@@ -96,18 +96,20 @@ public class BookDaoImpl implements BookDao {
 		}
 		return list;		
 	}
-	
+
 	@Override
 	public List<Map<String,Object>> location(Book book) {
 		// TODO Auto-generated method stub
 		String authors = null;
 		List<Map<String,Object>> list = new ArrayList();
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select b.bookName , b.location , b.authors from Book b"+"where b.indexId = ?");
+		Query query = session.createQuery("select b.bookName , b.location from Book b where b.indexId = ?");
 		query.setString(0,book.getIndexId());
-		Book book1 = (Book)query.uniqueResult();
+		Object[] book1 = (Object[])query.uniqueResult();
 		Map map = new HashMap();
-		List<Author> authorList =  (List<Author>) book.getAuthors(); 
+		Query query2 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+		query2.setString(0,book.getIndexId());
+		List authorList = query2.list(); 
 		System.out.println(authorList.size());
 		for (Object authorName : authorList) {
 			Author author = (Author)authorName;
@@ -116,24 +118,22 @@ public class BookDaoImpl implements BookDao {
 		    } else {
 		    	authors += ("," + (String)author.getAuthorName());
 		    }
-		    
 		}
-		
-		Query query1 = session.createQuery(" from OnlyBook o"+"where o.book.indexId = ?");
+
+		Query query1 = session.createQuery(" from OnlyBook o where o.book.indexId = ?");
 		query1.setString(0,book.getIndexId());
 		List<OnlyBook> onlybooklist = query1.list();
-		int i = 0 ;
+		int I = 0 ;
 		for(OnlyBook onlybook : onlybooklist) {
-			map.put("bookId", onlybook.getBookId());
+			map.put("indexId", book.getIndexId());
 			map.put("status", onlybook.getStatus());
-			map.put("bookName", book1.getBookName());
-			map.put("locatin", book1.getLocation());
+			map.put("bookName", book1[0]);
+			map.put("location", book1[1]);
 			map.put("author", authors);
 			list.add(map);
 		}
-		
-		
 		return list;		
+
 	}
 
 	@Override
@@ -149,8 +149,12 @@ public class BookDaoImpl implements BookDao {
 		System.out.println(book.getBookName() + "1");
 		Query query1 = session.createQuery("select b.types from Book b where b.indexId= ? ");
 		query1.setString(0, book1.getIndexId());
+		Query query2 = session.createQuery("update Book set hot = ? where indexId=?");
+		query2.setInteger(0, book1.getHot()+1);
+		query2.setString(1,book1.getIndexId());
+		query2.executeUpdate();
 		List list = query1.list();
-		for (int i=0;i<list.size(); i++){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+		for (int i=0;i<list.size(); i++){
 		    BookType stu = (BookType)list.get(i);
 		    if (str == null) {
 		    	str = (String)stu.getTypeName();

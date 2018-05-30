@@ -57,7 +57,7 @@ public class BookAction {
 		book.setIndexId(indexId);
 		List<Map<String,Object>> bookList = bookService.location(book);
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return bookListStr;
