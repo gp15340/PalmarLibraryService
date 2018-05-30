@@ -9,15 +9,27 @@ import org.springframework.stereotype.Service;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.User;
 import com.palmarLibrary.dao.BookDao;
+import com.palmarLibrary.dao.BookTypeDao;
 
 @Service
 public class BookService {
 	@Autowired
 	private BookDao bookDao;
+	@Autowired
+	private BookTypeDao bookTypeDao;
+	
+	public List<String> getBookType(){
+		List<String> bookTypeList = bookTypeDao.getBookType();
+		return bookTypeList;
+	}
+	
+	
+	
 	public List<Map<String,Object>> getHotBook(){
 		List<Map<String,Object>> bookList = bookDao.getHotBook();
 		return bookList;
 	}
+	
 	
 	public String getBookDetails(Book book){
 		String bookList = bookDao.getBookDetails(book);
