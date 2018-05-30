@@ -64,7 +64,7 @@ public class BookAction {
 			HttpSession session){
 		Book book = new Book();
 		book.setBookName(bookName);
-		book.setAuthor(author);
+		//book.setAuthor(author);
 		String bookList = bookService.getBookDetails(book);
 		System.out.println(bookList);
 		return bookList;

@@ -18,10 +18,9 @@ public class Book {
 	@Id
 	private String indexId;
 	private String bookName;
-	private String author;
 	private String imgUrl;
 	private String isbn;
-	private int price;
+	private double price;
 	private String publisher;
 	private String shape;//xingtai
 	private String series;//congbian
@@ -36,6 +35,9 @@ public class Book {
 	private Set<BookType> types;
 	@OneToMany(mappedBy="book",targetEntity=Comment.class,cascade=CascadeType.ALL)
 	private Set<Comment> comments;
+	@ManyToMany(mappedBy="books")
+	private Set<Author> authors;
+	
 	public String getIndexId() {
 		return indexId;
 	}
@@ -48,22 +50,17 @@ public class Book {
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
 	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+	
 	public String getImgUrl() {
 		return imgUrl;
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public String getPublisher() {
@@ -102,6 +99,29 @@ public class Book {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	
+	public Set<OnlyBook> getOnlybooks() {
+		return onlybooks;
+	}
+	public void setOnlybooks(Set<OnlyBook> onlybooks) {
+		this.onlybooks = onlybooks;
+	}
+	public Set<BookType> getTypes() {
+		return types;
+	}
+	public void setTypes(Set<BookType> types) {
+		this.types = types;
+	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+	public Set<Author> getAuthors() {
+		return authors;
+	}
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
+	}
 
 }

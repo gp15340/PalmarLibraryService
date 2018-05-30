@@ -44,7 +44,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public String getBookDetails(Book book) {
 		// TODO Auto-generated method stub
-		String str = null;
+		/*String str = null;
 		Session session = sessionFactory.getCurrentSession();
 		System.out.println(book.getBookName());
 		System.out.println(book.getAuthor());
@@ -83,7 +83,8 @@ public class BookDaoImpl implements BookDao {
 		Type type = new TypeToken<Map<String,Object>>(){}.getType();
 		String bookStr = gson.toJson(map,type);
 		return bookStr;
-		
+		*/
+		return null;
 	}
 	
 	@Override
