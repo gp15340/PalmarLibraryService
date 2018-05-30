@@ -46,16 +46,24 @@ public class BookDaoImpl implements BookDao {
 		// TODO Auto-generated method stub
 		String str = null;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select b from Book b"+"where b.bookName = ? and b.author = ?");
+		System.out.println(book.getBookName());
+		System.out.println(book.getAuthor());
+		Query query = session.createQuery("from Book b where b.bookName = ? and b.author = ?");
 		query.setString(0,book.getBookName());
 		query.setString(1, book.getAuthor());
-		Book book1 = (Book)query;
-		Query query1 = session.createQuery("select b.types from book b where b.indexId= ? ");
+		Book book1 = (Book)query.uniqueResult();
+		System.out.println(book.getBookName() + "1");
+		System.out.println(book.getAuthor() + "1");
+		Query query1 = session.createQuery("select b.types from Book b where b.indexId= ? ");
 		query1.setString(0, book1.getIndexId());
 		List list = query1.list();
-		for (int i=0;i<list.size(); i++){
+		for (int i=0;i<list.size(); i++){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 		    BookType stu = (BookType)list.get(i);
-		    str = (String)stu.getTypeName() + "-" + str;
+		    if (str == null) {
+		    	str = (String)stu.getTypeName();
+		    } else {
+		    	str += ("-" + (String)stu.getTypeName());
+		    }
 		}
 		Map<String,Object> map = new HashMap();
 		map.put("indexId", book1.getIndexId());
