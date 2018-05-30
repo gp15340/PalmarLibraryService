@@ -10,20 +10,37 @@ import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.Comment;
 import com.palmarLibrary.bean.User;
 import com.palmarLibrary.dao.BookDao;
+import com.palmarLibrary.dao.BookTypeDao;
 
 @Service
 public class BookService {
 	@Autowired
 	private BookDao bookDao;
+	@Autowired
+	private BookTypeDao bookTypeDao;
+	
+	public List<String> getBookType(){
+		List<String> bookTypeList = bookTypeDao.getBookType();
+		return bookTypeList;
+	}
+	
+	public List<Map<String,Object>> selectBookByType(List<String> typeNameList){
+		List<Map<String,Object>> bookList = bookDao.selectBookByType(typeNameList);
+		return bookList;
+	};
+	
+	
 	public List<Map<String,Object>> getHotBook(){
 		List<Map<String,Object>> bookList = bookDao.getHotBook();
 		return bookList;
 	}
 	
+
 	public List<Map<String,Object>> getauthor(){
 		List<Map<String,Object>> bookList = bookDao.getauthor();
 		return bookList;
 	}
+
 	
 	public String getBookDetails(Book book){
 		String bookList = bookDao.getBookDetails(book);

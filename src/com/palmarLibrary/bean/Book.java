@@ -26,7 +26,6 @@ public class Book {
 	private String shape;//xingtai
 	private String series;//congbian
 	private String location;
-	private String status;
 	private int hot;
 	@OneToMany(mappedBy="book",targetEntity=OnlyBook.class,cascade=CascadeType.ALL)
 	private Set<OnlyBook> onlybooks;
@@ -90,12 +89,6 @@ public class Book {
 	}
 	public void setLocation(String location) {
 		this.location = location;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
 	}
 	public int getHot() {
 		return hot;
