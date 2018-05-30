@@ -20,6 +20,7 @@ import com.palmarLibrary.bean.Author;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
 import com.palmarLibrary.bean.Comment;
+import com.palmarLibrary.bean.OnlyBook;
 import com.palmarLibrary.bean.User;
 
 @Repository
@@ -93,16 +94,39 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public List<Map<String,Object>> location(Book book) {
 		// TODO Auto-generated method stub
+		String authors = null;
+		List<Map<String,Object>> list = new ArrayList();
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select b.bookName , b.location , b.authors from Book b"+"where indexId = ?");
+		Query query = session.createQuery("select b.bookName , b.location , b.authors from Book b"+"where b.indexId = ?");
 		query.setString(0,book.getIndexId());
+		Book book1 = (Book)query.uniqueResult();
+		Map map = new HashMap();
+		map.put("bookName", book1.getBookName());
+		map.put("locatin", book1.getLocation());
+		List<Author> authorList =  (List<Author>) book.getAuthors(); 
+		System.out.println(authorList.size());
+		for (Object authorName : authorList) {
+			Author author = (Author)authorName;
+		    if (authors == null) {
+		    	authors = (String)author.getAuthorName();
+		    } else {
+		    	authors += ("," + (String)author.getAuthorName());
+		    }
+		    
+		}
+		map.put("author", authors);
 		Query query1 = session.createQuery(" from OnlyBook o"+"where o.book.indexId = ?");
 		query1.setString(0,book.getIndexId());
+		List<OnlyBook> onlybooklist = query1.list();
+		int i = 0 ;
+		for(OnlyBook onlybook : onlybooklist) {
+			map.put("bookId", onlybook.getBookId());
+			map.put("status", onlybook.getStatus());
+		}
 		
+		list.add(map);
 		
-
-		
-		return "aaa";		
+		return list;		
 	}
 
 	@Override
