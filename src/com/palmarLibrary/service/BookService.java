@@ -47,8 +47,8 @@ public class BookService {
 		return bookList;
 	}
 	
-	public String getcomment(Comment comment){
-		String bookList = bookDao.getcomment(comment);
+	public List<Map<String,Object>> getcomment(Comment comment){
+		List<Map<String,Object>> bookList = bookDao.getcomment(comment);
 		return bookList;
 	}
 	

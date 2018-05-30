@@ -89,9 +89,12 @@ public class BookAction {
 		Book book = new Book();
 		book.setIndexId(indexId);
 		comment.setBook(book);
-		String bookList = bookService.getcomment(comment);
-		System.out.println(bookList);
-		return bookList;
+		List<Map<String,Object>> bookList = bookService.getcomment(comment);;
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println(bookListStr);
+		return bookListStr;
 	}
 	
 	@RequestMapping("getBorrowRecords")
