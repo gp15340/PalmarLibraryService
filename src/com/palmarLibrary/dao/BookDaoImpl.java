@@ -75,6 +75,7 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public String getBookDetails(Book book) {
+		
 		// TODO Auto-generated method stub
 		/*String str = null;
 		Session session = sessionFactory.getCurrentSession();
