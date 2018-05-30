@@ -55,11 +55,22 @@ public class BookDaoImpl implements BookDao {
 	}
 	
 	@Override
-	public String getcomment(Comment comment) {
+	public List<Map<String,Object>> getcomment(Comment comment) {
 		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select userId , content , commentTime from Comment"+"where indexId = ?");
+		query.setString(0,comment.getBook().getIndexId());
+		List<Object[]> bookList = query.list();
+		List<Map<String,Object>> list = new ArrayList();
+		for (Object[] object : bookList) {
+			Map map = new HashMap();
+			map.put("userId", object[0]);
+			map.put("content",object[1]);
+			map.put("commentTime", object[2]);
+			list.add(map);
+		}
+		return list;
 		
-		
-		return null;
 	}
 
 	@Override
