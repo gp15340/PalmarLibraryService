@@ -38,11 +38,24 @@ public class BookAction {
 		return bookTypeListStr;
 		
 	}
+	
 	@RequestMapping("selectBookByType")
 	@ResponseBody
-	
 	public String selectBookByType(List<String> typeNameList) {
 		List<Map<String,Object>> bookList = bookService.selectBookByType(typeNameList);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println(bookListStr);
+		return bookListStr;
+	}
+	
+	@RequestMapping("location")
+	@ResponseBody
+	public String location(String indexId) {
+		Book book = new Book();
+		book.setIndexId(indexId);
+		List<Map<String,Object>> bookList = bookService.location(book);
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<Book>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);

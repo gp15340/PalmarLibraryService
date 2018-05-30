@@ -55,6 +55,11 @@ public class BookService {
 		return bookList;
 	}
 	
+	public List<Map<String,Object>> location(Book book){
+		List<Map<String,Object>> bookList = bookDao.location(book);
+		return bookList;
+	}
+	
 	public List<Map<String, Object>> getBorrowRecords(User user) {
 		List<Map<String,Object>> bookList = bookDao.getBorrowRecords(user);
 		for (Map<String,Object> map : bookList) {
