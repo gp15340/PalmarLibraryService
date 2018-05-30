@@ -45,8 +45,8 @@ public class BookService {
 	}
 
 	
-	public String getBookDetails(Book book){
-		String bookList = bookDao.getBookDetails(book);
+	public String getBookDetails(Book book,String author){
+		String bookList = bookDao.getBookDetails(book,author);
 		return bookList;
 	}
 	

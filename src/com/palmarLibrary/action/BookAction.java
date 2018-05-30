@@ -55,7 +55,7 @@ public class BookAction {
 	public String GetHotBook(){
 		List<Map<String,Object>> bookList = bookService.getHotBook();
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return bookListStr;
@@ -79,7 +79,7 @@ public class BookAction {
 		Book book = new Book();
 		book.setBookName(bookName);
 		//book.setAuthor(author);
-		String bookList = bookService.getBookDetails(book);
+		String bookList = bookService.getBookDetails(book,author);
 		System.out.println(bookList);
 		return bookList;
 	}
