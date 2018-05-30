@@ -63,7 +63,7 @@ public class BookService {
 			List<Map<String,Object>> list = bookDao.getBorrowBook(indexId);
 			for (Map<String,Object> map1 : list) {
 				map.put("bookName", map1.get("bookName"));
-				map.put("author", map1.get("bookName"));
+				map.put("author", map1.get("author"));
 			}
 		}
 		return bookList;
@@ -72,6 +72,8 @@ public class BookService {
 	public boolean insertComment(String userId, String indexId, String content, String time) {
 		User user = userDao.getUser(userId);
 		Book book = bookDao.getBookByIndexId(indexId);
+		System.out.println(user.getUserId());
+		System.out.println(book.getIndexId());
 		Comment comment = new Comment();
 		comment.setBook(book);
 		comment.setUser(user);

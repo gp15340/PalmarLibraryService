@@ -63,7 +63,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public List<String> getauthor() {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select author from Book ");
+		Query query = session.createQuery("select authorName from Author order by hot desc ");
 		List<String> bookList = query.list();
 		List<String> list = new ArrayList();
 		for (String str : bookList) {
@@ -76,15 +76,21 @@ public class BookDaoImpl implements BookDao {
 	public List<Map<String,Object>> getcomment(Comment comment) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select userId , content , commentTime from Comment"+"where indexId = ?");
+		Query query = session.createQuery("select c.user.userId , c.content , c.commentTime from Comment c where c.book.indexId = ? order by commentId desc");
 		query.setString(0,comment.getBook().getIndexId());
+		System.out.println("indexId:"+comment.getBook().getIndexId());
 		List<Object[]> bookList = query.list();
 		List<Map<String,Object>> list = new ArrayList();
 		for (Object[] object : bookList) {
+			Query query1 = session.createQuery("select imgUrl,nickname from User where userId=?");
+			query1.setString(0, object[0].toString());
+			Object[] user = (Object[]) query1.uniqueResult();
 			Map map = new HashMap();
+			map.put("imgUrl", user[0]);
 			map.put("userId", object[0]);
 			map.put("content",object[1]);
 			map.put("commentTime", object[2]);
+			map.put("nickname", user[1]);
 			list.add(map);
 		}
 		return list;
@@ -169,17 +175,28 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public List<Map<String, Object>> getBorrowBook(String indexId) {
 		// TODO Auto-generated method stub
+		String authors = null;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select bookName,author from Book where indexId = ?");
+		Query query = session.createQuery("select bookName from Book where indexId = ?");
 		query.setString(0, indexId);
-		List<Object[]> bookList = query.list();
+		String bookName = (String)query.uniqueResult();
 		List<Map<String,Object>> list = new ArrayList();
-		for (Object[] object : bookList) {
-			Map map = new HashMap();
-			map.put("bookName", object[0]);
-			map.put("author",object[1]);
-			list.add(map);
+		Map map = new HashMap();
+		map.put("bookName", bookName);
+		Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+		query1.setString(0,indexId);
+		List authorList = query1.list(); 
+		System.out.println(authorList.size());
+		for (Object authorName : authorList) {
+			Author author = (Author)authorName;
+		    if (authors == null) {
+		    	authors = (String)author.getAuthorName();
+		    } else {
+		    	authors += ("," + (String)author.getAuthorName());
+		    }
+		    map.put("author", authors);
 		}
+		list.add(map);
 		return list;
 	}
 
@@ -206,6 +223,7 @@ public class BookDaoImpl implements BookDao {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Book where indexId = ?");
+		query.setString(0, indexId);
 		Book book = (Book) query.uniqueResult();
 		return book;
 	}

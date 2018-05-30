@@ -84,16 +84,17 @@ public class BookAction {
 		return bookList;
 	}
 	
-	@RequestMapping("getcomment")
+	@RequestMapping("getBookReview")
 	@ResponseBody
 	public String Getcomment(String indexId){
+		System.out.println("indexId=" + indexId);
 		Comment comment = new Comment();
 		Book book = new Book();
 		book.setIndexId(indexId);
 		comment.setBook(book);
 		List<Map<String,Object>> bookList = bookService.getcomment(comment);;
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println(bookListStr);
 		return bookListStr;
@@ -107,11 +108,10 @@ public class BookAction {
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<Book>>(){}.getType();
 		String bookListStr = gson.toJson(bookList,type);
-		System.out.println(bookListStr);
 		return  bookListStr;
 	}
 	
-	@RequestMapping("insertComment")
+	@RequestMapping("addReview")
 	@ResponseBody
 	public String insertComment(String userId,String indexId,String content) {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
