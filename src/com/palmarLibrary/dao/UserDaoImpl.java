@@ -82,6 +82,7 @@ public class UserDaoImpl implements UserDao {
 			Type type = new TypeToken<Map<String,Object>>(){}.getType();
 			String userStr = gson.toJson(map,type);
 			return userStr;
+			
 		}
 		return "fail";
 	}
