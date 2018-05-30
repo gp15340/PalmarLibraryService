@@ -25,6 +25,17 @@ public class BookAction {
 	@Autowired
 	private UserService userService;
 	
+	@RequestMapping("getBookType")
+	@ResponseBody
+	public String GetBookType() {
+		List<String> bookTypeList = bookService.getBookType();
+		Gson gson = new Gson();
+		String bookTypeListStr = gson.toJson(bookTypeList);
+		return bookTypeListStr;
+		
+	}
+	
+	
 	@RequestMapping("getHotBook")
 	@ResponseBody
 	public String GetHotBook(){
