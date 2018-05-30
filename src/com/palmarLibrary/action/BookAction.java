@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.palmarLibrary.bean.Book;
+import com.palmarLibrary.bean.Comment;
 import com.palmarLibrary.bean.User;
 import com.palmarLibrary.service.BookService;
 import com.palmarLibrary.service.UserService;
@@ -58,6 +59,19 @@ public class BookAction {
 		System.out.println(bookList);
 		return bookList;
 	}
+	
+	@RequestMapping("getcomment")
+	@ResponseBody
+	public String Getcomment(String indexId){
+		Comment comment = new Comment();
+		Book book = new Book();
+		book.setIndexId(indexId);
+		comment.setBook(book);
+		String bookList = bookService.getcommentcomment);
+		System.out.println(bookList);
+		return bookList;
+	}
+	
 	@RequestMapping("getBorrowRecords")
 	@ResponseBody
 	public String getBorrowRecords(String userId) {

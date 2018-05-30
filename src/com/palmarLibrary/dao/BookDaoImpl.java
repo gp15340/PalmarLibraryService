@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
+import com.palmarLibrary.bean.Comment;
 import com.palmarLibrary.bean.User;
 
 @Repository
@@ -53,6 +54,14 @@ public class BookDaoImpl implements BookDao {
 			list.add(map);
 		}
 		return list;
+	}
+	
+	@Override
+	public String getcomment(Comment comment) {
+		// TODO Auto-generated method stub
+		
+		
+		return null;
 	}
 
 	@Override
@@ -140,5 +149,7 @@ public class BookDaoImpl implements BookDao {
 		}
 		return list;
 	}
+
+	
 
 }
