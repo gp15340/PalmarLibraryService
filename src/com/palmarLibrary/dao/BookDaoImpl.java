@@ -101,8 +101,6 @@ public class BookDaoImpl implements BookDao {
 		query.setString(0,book.getIndexId());
 		Book book1 = (Book)query.uniqueResult();
 		Map map = new HashMap();
-		map.put("bookName", book1.getBookName());
-		map.put("locatin", book1.getLocation());
 		List<Author> authorList =  (List<Author>) book.getAuthors(); 
 		System.out.println(authorList.size());
 		for (Object authorName : authorList) {
@@ -114,7 +112,7 @@ public class BookDaoImpl implements BookDao {
 		    }
 		    
 		}
-		map.put("author", authors);
+		
 		Query query1 = session.createQuery(" from OnlyBook o"+"where o.book.indexId = ?");
 		query1.setString(0,book.getIndexId());
 		List<OnlyBook> onlybooklist = query1.list();
@@ -122,9 +120,12 @@ public class BookDaoImpl implements BookDao {
 		for(OnlyBook onlybook : onlybooklist) {
 			map.put("bookId", onlybook.getBookId());
 			map.put("status", onlybook.getStatus());
+			map.put("bookName", book1.getBookName());
+			map.put("locatin", book1.getLocation());
+			map.put("author", authors);
+			list.add(map);
 		}
 		
-		list.add(map);
 		
 		return list;		
 	}
