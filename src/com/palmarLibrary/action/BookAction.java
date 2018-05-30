@@ -36,6 +36,17 @@ public class BookAction {
 		return bookListStr;
 	}
 	
+	@RequestMapping("getauthor")
+	@ResponseBody
+	public String Getauthor(){
+		List<Map<String,Object>> bookList = bookService.getauthor();
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println(bookListStr);
+		return bookListStr;
+	}
+	
 	@RequestMapping("getBookDetails")
 	@ResponseBody
 	public String GetBookDetails(String bookName,String author,

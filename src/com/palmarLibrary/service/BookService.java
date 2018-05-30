@@ -19,6 +19,11 @@ public class BookService {
 		return bookList;
 	}
 	
+	public List<Map<String,Object>> getauthor(){
+		List<Map<String,Object>> bookList = bookDao.getauthor();
+		return bookList;
+	}
+	
 	public String getBookDetails(Book book){
 		String bookList = bookDao.getBookDetails(book);
 		return bookList;
