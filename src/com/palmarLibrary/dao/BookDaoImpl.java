@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
+import com.palmarLibrary.bean.Comment;
 import com.palmarLibrary.bean.User;
 
 @Repository
@@ -39,6 +40,37 @@ public class BookDaoImpl implements BookDao {
 			list.add(map);
 		}
 		return list;
+	}
+	
+	@Override
+	public List<String> getauthor() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select author from Book ");
+		List<String> bookList = query.list();
+		List<String> list = new ArrayList();
+		for (String str : bookList) {
+			list.add(str);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Map<String,Object>> getcomment(Comment comment) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select userId , content , commentTime from Comment"+"where indexId = ?");
+		query.setString(0,comment.getBook().getIndexId());
+		List<Object[]> bookList = query.list();
+		List<Map<String,Object>> list = new ArrayList();
+		for (Object[] object : bookList) {
+			Map map = new HashMap();
+			map.put("userId", object[0]);
+			map.put("content",object[1]);
+			map.put("commentTime", object[2]);
+			list.add(map);
+		}
+		return list;
+		
 	}
 
 	@Override
@@ -136,6 +168,7 @@ public class BookDaoImpl implements BookDao {
 		return list;
 	}
 
+
 	@Override
 	public List<Map<String, Object>> selectBookByType(List<String> typeNameList) {
 		// TODO Auto-generated method stub
@@ -152,5 +185,23 @@ public class BookDaoImpl implements BookDao {
 		return list;*/
 		return null;
 	}
+
+	@Override
+	public Book getBookByIndexId(String indexId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Book where indexId = ?");
+		Book book = (Book) query.uniqueResult();
+		return book;
+	}
+
+	@Override
+	public boolean insertComment(Comment comment) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		session.save(comment);
+		return true;
+	}
+
 
 }

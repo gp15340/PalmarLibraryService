@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.palmarLibrary.bean.Book;
+import com.palmarLibrary.bean.Comment;
 import com.palmarLibrary.bean.User;
 import com.palmarLibrary.dao.BookDao;
 import com.palmarLibrary.dao.BookTypeDao;
+import com.palmarLibrary.dao.UserDao;
 
 @Service
 public class BookService {
@@ -17,6 +19,8 @@ public class BookService {
 	private BookDao bookDao;
 	@Autowired
 	private BookTypeDao bookTypeDao;
+	@Autowired
+	private UserDao userDao;
 	
 	public List<String> getBookType(){
 		List<String> bookTypeList = bookTypeDao.getBookType();
@@ -34,9 +38,20 @@ public class BookService {
 		return bookList;
 	}
 	
+
+	public List<String> getauthor(){
+		List<String> bookList = bookDao.getauthor();
+		return bookList;
+	}
+
 	
 	public String getBookDetails(Book book){
 		String bookList = bookDao.getBookDetails(book);
+		return bookList;
+	}
+	
+	public List<Map<String,Object>> getcomment(Comment comment){
+		List<Map<String,Object>> bookList = bookDao.getcomment(comment);
 		return bookList;
 	}
 	
@@ -52,5 +67,17 @@ public class BookService {
 			}
 		}
 		return bookList;
+	}
+
+	public boolean insertComment(String userId, String indexId, String content, String time) {
+		User user = userDao.getUser(userId);
+		Book book = bookDao.getBookByIndexId(indexId);
+		Comment comment = new Comment();
+		comment.setBook(book);
+		comment.setUser(user);
+		comment.setContent(content);
+		comment.setCommentTime(time);
+		boolean flag = bookDao.insertComment(comment);
+		return flag;
 	}
 }
