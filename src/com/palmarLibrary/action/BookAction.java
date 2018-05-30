@@ -67,7 +67,7 @@ public class BookAction {
 		Book book = new Book();
 		book.setIndexId(indexId);
 		comment.setBook(book);
-		String bookList = bookService.getcommentcomment);
+		String bookList = bookService.getcomment(comment);
 		System.out.println(bookList);
 		return bookList;
 	}
