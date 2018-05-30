@@ -23,6 +23,10 @@ public class BookService {
 		return bookTypeList;
 	}
 	
+	public List<Map<String,Object>> selectBookByType(List<String> typeNameList){
+		List<Map<String,Object>> bookList = bookDao.selectBookByType(typeNameList);
+		return bookList;
+	};
 	
 	
 	public List<Map<String,Object>> getHotBook(){

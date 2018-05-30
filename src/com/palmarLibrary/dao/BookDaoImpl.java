@@ -127,4 +127,21 @@ public class BookDaoImpl implements BookDao {
 		return list;
 	}
 
+	@Override
+	public List<Map<String, Object>> selectBookByType(List<String> typeNameList) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		/*Query query = session.createQuery("select bookName,author from Book order by hot desc");
+		List<Object[]> bookList = query.list();
+		List<Map<String,Object>> list = new ArrayList();
+		for (Object[] object : bookList) {
+			Map map = new HashMap();
+			map.put("bookName", object[0]);
+			map.put("author",object[1]);
+			list.add(map);
+		}
+		return list;*/
+		return null;
+	}
+
 }

@@ -30,11 +30,22 @@ public class BookAction {
 	public String GetBookType() {
 		List<String> bookTypeList = bookService.getBookType();
 		Gson gson = new Gson();
-		String bookTypeListStr = gson.toJson(bookTypeList);
+		Type type = new TypeToken<List<String>>(){}.getType();
+		String bookTypeListStr = gson.toJson(bookTypeList,type);
 		return bookTypeListStr;
 		
 	}
+	@RequestMapping("selectBookByType")
+	@ResponseBody
 	
+	public String selectBookByType(List<String> typeNameList) {
+		List<Map<String,Object>> bookList = bookService.selectBookByType(typeNameList);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println(bookListStr);
+		return bookListStr;
+	}
 	
 	@RequestMapping("getHotBook")
 	@ResponseBody

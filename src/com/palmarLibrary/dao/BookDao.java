@@ -14,4 +14,5 @@ public interface BookDao {
 	String getBook(Object object);
 
 	List<Map<String, Object>> getBorrowBook(String indexId);
+	List<Map<String, Object>> selectBookByType(List<String> typeNameList);
 }
