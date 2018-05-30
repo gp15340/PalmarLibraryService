@@ -71,8 +71,22 @@ public class BookDaoImpl implements BookDao {
 			map.put("commentTime", object[2]);
 			list.add(map);
 		}
-		return list;
+		return list;		
+	}
+	
+	@Override
+	public List<Map<String,Object>> location(Book book) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select b.bookName , b.location , b.authors from Book b"+"where indexId = ?");
+		query.setString(0,book.getIndexId());
+		Query query1 = session.createQuery(" from OnlyBook o"+"where o.book.indexId = ?");
+		query1.setString(0,book.getIndexId());
 		
+		
+
+		
+		return "aaa";		
 	}
 
 	@Override

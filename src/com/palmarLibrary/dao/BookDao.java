@@ -12,6 +12,7 @@ public interface BookDao {
 	List<Map<String,Object>> getauthor();
 	String getBookDetails(Book book);
 	List<Map<String,Object>> getcomment(Comment comment);
+	List<Map<String,Object>> location(Book book);
 	List<Map<String, Object>> getBorrowRecords(User user);
 
 	String getBook(Object object);
