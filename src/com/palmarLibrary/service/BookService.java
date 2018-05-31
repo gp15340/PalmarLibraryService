@@ -87,5 +87,11 @@ public class BookService {
 		boolean flag = bookDao.insertComment(comment);
 		return flag;
 	}
+
+	public List<Map<String, Object>> searchByAuthor(String author) {
+		int authorId = bookDao.searchAuthorId(author);
+		List<Map<String,Object>> bookList = bookDao.searchBookByAuthor(authorId);
+		return bookList;
+	}
 	
 }

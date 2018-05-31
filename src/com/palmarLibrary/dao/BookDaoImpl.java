@@ -27,6 +27,7 @@ import com.palmarLibrary.bean.User;
 @Transactional
 public class BookDaoImpl implements BookDao {
 
+	private static final Book object = null;
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -277,6 +278,59 @@ public class BookDaoImpl implements BookDao {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(comment);
 		return true;
+	}
+
+	@Override
+	public int searchAuthorId(String author) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select authorId from Author where authorName=?");
+		query.setString(0, author);
+		int authorId = (int)query.uniqueResult();
+		return authorId;
+	}
+
+	@Override
+	public List<Map<String, Object>> searchBookByAuthor(int authorId) {
+		Session session = sessionFactory.getCurrentSession();
+		String authors = null;
+		Query query = session.createQuery("select a.books from Author a where a.authorId=?");
+		query.setInteger(0, authorId);
+		List indexList = query.list();
+		List<Map<String,Object>> bookList = new ArrayList();
+		
+		for (Object object : indexList) {
+			Map map = new HashMap();
+			Book book = (Book)object;
+			String indexId = book.getIndexId();
+			Query query1 = session.createQuery("select bookName,imgUrl,hot from Book where indexId=?");
+			query1.setString(0, indexId);
+			Object[] book2 = (Object[])query1.uniqueResult();
+			map.put("bookName", book2[0]);
+			map.put("imgUrl",book2[1]);
+			map.put("hot", book2[2]);
+			Query query2 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+			query2.setString(0,indexId);
+			List authorList = query2.list(); 
+			System.out.println(authorList.size());
+			for (Object authorName : authorList) {
+				Author author = (Author)authorName;
+			    if (authors == null) {
+			    	authors = (String)author.getAuthorName();
+			    } else {
+			    	authors += ("," + (String)author.getAuthorName());
+			    }
+			    map.put("author", authors);
+			}
+			bookList.add(map);
+		}
+		Query query4 = session.createQuery("from Author where authorId=?");
+		query4.setInteger(0, authorId);
+		Author author = (Author)query4.uniqueResult();
+		Query query5 = session.createQuery("update Author set hot = ? where authorId=?");
+		query5.setInteger(0, author.getHot()+1);
+		query5.setInteger(1, authorId);
+		query5.executeUpdate();
+		return bookList;
 	}
 
 

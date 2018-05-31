@@ -136,4 +136,15 @@ public class BookAction {
 		return "fail";
 		
 	}
+	
+	@RequestMapping("searchByAuthor")
+	@ResponseBody
+	public String searchByAuthor(String author) {
+		List<Map<String,Object>> bookList = bookService.searchByAuthor(author);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println("searchByAuthor:" + bookListStr);
+		return bookListStr;
+	}
 }

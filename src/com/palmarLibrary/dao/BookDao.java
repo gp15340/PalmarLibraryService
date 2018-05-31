@@ -21,5 +21,7 @@ public interface BookDao {
 	List<Map<String, Object>> selectBookByType(List<String> typeNameList);
 	boolean insertComment(Comment comment);
 	Book getBookByIndexId(String indexId);
+	int searchAuthorId(String author);
+	List<Map<String, Object>> searchBookByAuthor(int authorId);
 	
 }
