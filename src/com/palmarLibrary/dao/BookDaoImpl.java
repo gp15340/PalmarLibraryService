@@ -270,6 +270,7 @@ public class BookDaoImpl implements BookDao {
                
                indexList.add(entry.getKey());
            
+               
         }
 		List<Map<String,Object>> bookList = new ArrayList();
 		String authors = null;
