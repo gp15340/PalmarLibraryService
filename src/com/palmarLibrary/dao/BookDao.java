@@ -23,5 +23,7 @@ public interface BookDao {
 	Book getBookByIndexId(String indexId);
 	int searchAuthorId(String author);
 	List<Map<String, Object>> searchBookByAuthor(int authorId);
+	List<Map<String, Object>> getReadBook(String indexId);
+	List<Map<String, Object>> getFavoriteBook(User user);
 	
 }

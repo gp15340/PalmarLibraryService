@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,6 +32,17 @@ public class User {
 	private Set<Comment> comments;
 	@OneToMany(mappedBy="user",targetEntity=Borrow.class,cascade=CascadeType.ALL)
 	private Set<Borrow> borrows;
+	@ManyToMany
+	@JoinTable(name="favorite",
+	joinColumns=@JoinColumn(name="userId"),
+	inverseJoinColumns=@JoinColumn(name="indexId"))
+	private Set<Book> books;
+	public Set<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(Set<Book> books) {
+		this.books = books;
+	}
 	public Set<Comment> getComments() {
 		return comments;
 	}
