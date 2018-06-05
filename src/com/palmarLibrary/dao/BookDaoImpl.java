@@ -42,6 +42,8 @@ public class BookDaoImpl implements BookDao {
 			authors=null;
 			Map map = new HashMap();
 			map.put("bookName", book.getBookName());
+			map.put("imgUrl", book.getImgUrl());
+			map.put("hot", book.getHot());
 			String indexId = book.getIndexId();
 			System.out.println("index=" + indexId);
 			Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
@@ -330,6 +332,68 @@ public class BookDaoImpl implements BookDao {
 		query5.setInteger(0, author.getHot()+1);
 		query5.setInteger(1, authorId);
 		query5.executeUpdate();
+		return bookList;
+	}
+
+	@Override
+	public List<Map<String, Object>> getReadBook(String indexId) {
+		
+		String authors = null;
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select bookName,imgUrl,hot from Book where indexId = ?");
+		query.setString(0, indexId);
+		Object[] book = (Object[])query.uniqueResult();
+		List<Map<String,Object>> list = new ArrayList();
+		Map map = new HashMap();
+		map.put("bookName", book[0]);
+		map.put("imtUrl", book[1]);
+		map.put("hot",book[2]);
+		Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+		query1.setString(0,indexId);
+		List authorList = query1.list(); 
+		System.out.println(authorList.size());
+		for (Object authorName : authorList) {
+			Author author = (Author)authorName;
+		    if (authors == null) {
+		    	authors = (String)author.getAuthorName();
+		    } else {
+		    	authors += ("," + (String)author.getAuthorName());
+		    }
+		    map.put("author", authors);
+		}
+		list.add(map);
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> getFavoriteBook(User user) {
+		List<Map<String,Object>> bookList = new ArrayList();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select u.books from User u where u.userId = ?");
+		query.setString(0,user.getUserId());
+		List books = query.list();
+		for (Object book1 : books) {
+			Map map = new HashMap();
+			Book book = (Book) book1;
+			String indexId = book.getIndexId();
+			Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+			query1.setString(0,indexId);
+			List authorList = query1.list(); 
+			System.out.println(authorList.size());
+			String authors = null;
+			for (Object authorName : authorList) {
+				Author author = (Author)authorName;
+			    if (authors == null) {
+			    	authors = (String)author.getAuthorName();
+			    } else {
+			    	authors += ("," + (String)author.getAuthorName());
+			    }   
+			}
+			map.put("author", authors);
+			map.put("bookName", book.getBookName());
+			map.put("imgUrl",book.getImgUrl());
+			bookList.add(map);
+		}
 		return bookList;
 	}
 
