@@ -93,5 +93,25 @@ public class BookService {
 		List<Map<String,Object>> bookList = bookDao.searchBookByAuthor(authorId);
 		return bookList;
 	}
+
+	public List<Map<String, Object>> getReadBook(User user) {
+		List<Map<String,Object>> bookList = bookDao.getBorrowRecords(user);
+		for (Map<String,Object> map : bookList) {
+			String indexId = bookDao.getBook(map.get("bookId"));
+			map.put("indexId", indexId);
+			List<Map<String,Object>> list = bookDao.getReadBook(indexId);
+			for (Map<String,Object> map1 : list) {
+				map.put("bookName", map1.get("bookName"));
+				map.put("author", map1.get("author"));
+				map.put("imgUrl", map1.get("imgUrl"));
+			}
+		}
+		return bookList;
+	}
+
+	public List<Map<String, Object>> getFavoriteBook(User user) {
+		List<Map<String,Object>> bookList = bookDao.getFavoriteBook(user);
+		return bookList;
+	}
 	
 }

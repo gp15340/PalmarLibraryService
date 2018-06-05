@@ -152,4 +152,27 @@ public class BookAction {
 		System.out.println("searchByAuthor:" + bookListStr);
 		return bookListStr;
 	}
+	
+	@RequestMapping("getReadBook")
+	@ResponseBody
+	public String getReadBook(String userId) {
+		User user = userService.getUser(userId);
+		List<Map<String,Object>> bookList = bookService.getReadBook(user);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		return  bookListStr;
+	}
+	
+	@RequestMapping("getFavoriteBook")
+	@ResponseBody
+	public String getFavoriteBook(String userId) {
+		User user = userService.getUser(userId);
+		List<Map<String,Object>> bookList = bookService.getFavoriteBook(user);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println("getFavoriteBook:" + bookListStr);
+		return bookListStr;
+	}
 }

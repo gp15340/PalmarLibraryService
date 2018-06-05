@@ -38,7 +38,15 @@ public class Book {
 	private Set<Comment> comments;
 	@ManyToMany(mappedBy="books")
 	private Set<Author> authors;
+	@ManyToMany(mappedBy="books")
+	private Set<User> users;
 	
+	public Set<User> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
 	public String getIndexId() {
 		return indexId;
 	}
