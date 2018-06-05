@@ -269,7 +269,6 @@ public class BookDaoImpl implements BookDao {
 		List<String> indexList = new ArrayList();
 		for(Map.Entry<String,String> entry : bookId.entrySet()){
             
-               
                indexList.add(entry.getKey());
            
                
