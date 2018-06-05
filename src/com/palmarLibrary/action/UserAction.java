@@ -68,6 +68,7 @@ public class UserAction {
 	public String uploadfile( String userId, String passwd, @RequestParam(value="mPhoto")MultipartFile mPhoto, HttpServletRequest request) throws IOException  {
 		String filePath = null;
 		if (!mPhoto.isEmpty()) {  
+			
             try {  
                 // 文件保存路径  
                 filePath = request.getSession().getServletContext().getRealPath("/")   

@@ -27,6 +27,7 @@ public class UserDaoImpl implements UserDao {
 		query.setString(0, userId);
 		User user = (User)query.uniqueResult();
 		return user;
+		
 	}
 
 	@Override
