@@ -1,9 +1,12 @@
 package com.palmarLibrary.action;
 
 import java.io.File;
+import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,33 +65,29 @@ public class UserAction {
 	
 	@RequestMapping("uploadFile")
 	@ResponseBody
-	public String uploadfile(String userStr,@RequestParam(value="files") MultipartFile file,HttpSession session) {
-		System.out.println("123");
-		Gson gson = new Gson();
-		User user = gson.fromJson(userStr, User.class);
+	public String uploadfile( String userId, String passwd, @RequestParam(value="mPhoto")MultipartFile mPhoto, HttpServletRequest request) throws IOException  {
 		String filePath = null;
-		 if (!file.isEmpty()) {  
-	            try {  
-	                // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½  
-	              filePath = session.getServletContext().getRealPath("/") + "img/"  
-	                        + file.getOriginalFilename();  
-	                // ×ªï¿½ï¿½ï¿½Ä¼ï¿½  
-	                file.transferTo(new File(filePath));  
-	                user.setImgUrl(filePath);
-	            } catch (Exception e) {  
-	                e.printStackTrace();  
-	            }  
-	        } 
-		
-		 boolean flag = userService.upload(user);
-			if (flag) {
-				System.out.println("success");
-				session.setAttribute("user", user);
-				return filePath;
-			} else {
-				System.out.println("fail");
-				return "fail";
-			}
+		if (!mPhoto.isEmpty()) {  
+            try {  
+                // ÎÄ¼þ±£´æÂ·¾¶  
+                filePath = request.getSession().getServletContext().getRealPath("/")   
+                        + mPhoto.getOriginalFilename();  
+                // ×ª´æÎÄ¼þ  
+                mPhoto.transferTo(new File(filePath));  
+               
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }
+	         User user = new User();
+	         
+			user.setImgUrl(filePath);
+	         user.setUserId(userId);
+	         Boolean msg = userService.upload(user);
+	         if (msg) {
+					return filePath;
+				}
+	         return null;
 	}
 	
 	@RequestMapping("login")

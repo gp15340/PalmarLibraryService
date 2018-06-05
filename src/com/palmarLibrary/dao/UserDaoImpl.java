@@ -109,7 +109,7 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("update User set imgUrl = ? "
-				+ "where UserId=?");
+				+ "where userId=?");
 		query.setString(0,user.getImgUrl());
 		query.setString(1,user.getUserId());
 		int res = query.executeUpdate();
