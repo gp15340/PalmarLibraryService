@@ -41,11 +41,16 @@ public class BookAction {
 	
 	@RequestMapping("selectBookByType")
 	@ResponseBody
-	public String selectBookByType(List<String> typeNameList) {
-		List<Map<String,Object>> bookList = bookService.selectBookByType(typeNameList);
+	public String selectBookByType(String typeNameList) {
+	
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
-		String bookListStr = gson.toJson(bookList,type);
+		Type type = new TypeToken<List<String>>(){}.getType();
+		List<String>TypeList =gson.fromJson(typeNameList,type);
+      
+		List<Map<String,Object>> bookList = bookService.selectBookByType(TypeList);
+		Gson gson1 = new Gson();
+		Type type1 = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type1);
 		System.out.println(bookListStr);
 		return bookListStr;
 	}
