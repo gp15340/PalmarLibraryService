@@ -42,6 +42,8 @@ public class BookDaoImpl implements BookDao {
 			authors=null;
 			Map map = new HashMap();
 			map.put("bookName", book.getBookName());
+			map.put("imgUrl", book.getImgUrl());
+			map.put("hot", book.getHot());
 			String indexId = book.getIndexId();
 			System.out.println("index=" + indexId);
 			Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
