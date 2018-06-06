@@ -104,6 +104,7 @@ public class BookService {
 				map.put("bookName", map1.get("bookName"));
 				map.put("author", map1.get("author"));
 				map.put("imgUrl", map1.get("imgUrl"));
+				map.put("hot", map1.get("hot"));
 			}
 		}
 		return bookList;
@@ -122,6 +123,11 @@ public class BookService {
 	public List<Map<String, Object>> searchLikeAuthor(String author) {
 		List<Map<String,Object>> bookList = bookDao.searchLikeAuthor(author);
 		return bookList;
+	}
+
+	public boolean deleteFavoriteBook(String userId, String indexId) {
+		boolean flag = bookDao.deleteFavoriteBook(userId,indexId);
+		return flag;
 	}
 	
 }

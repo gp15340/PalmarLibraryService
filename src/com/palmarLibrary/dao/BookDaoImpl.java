@@ -387,7 +387,7 @@ public class BookDaoImpl implements BookDao {
 		List<Map<String,Object>> list = new ArrayList();
 		Map map = new HashMap();
 		map.put("bookName", book[0]);
-		map.put("imtUrl", book[1]);
+		map.put("imgUrl", book[1]);
 		map.put("hot",book[2]);
 		Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
 		query1.setString(0,indexId);
@@ -484,6 +484,19 @@ public class BookDaoImpl implements BookDao {
 			bookList.addAll(list);
 		}
 		return bookList;
+	}
+
+	@Override
+	public boolean deleteFavoriteBook(String userId, String indexId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("delete u.books from User u "
+				+ "where u.userId=? and u.books.indexId=?");
+		query.setString(0, userId);
+		query.setString(1, indexId);
+		int ref = query.executeUpdate();
+		if (ref>0) 
+			return true;
+		return false;
 	}
 
 

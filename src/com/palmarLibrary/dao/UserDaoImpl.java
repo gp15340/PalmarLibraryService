@@ -79,6 +79,7 @@ public class UserDaoImpl implements UserDao {
 			map.put("department", u.getDepartment());
 			map.put("userName",u.getUserName());
 			map.put("email", u.getEmail());
+			map.put("imgUrl",u.getImgUrl());
 			Gson gson = new Gson();
 			Type type = new TypeToken<Map<String,Object>>(){}.getType();
 			String userStr = gson.toJson(map,type);

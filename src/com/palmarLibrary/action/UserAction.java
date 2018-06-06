@@ -65,16 +65,16 @@ public class UserAction {
 	
 	@RequestMapping("uploadFile")
 	@ResponseBody
-	public String uploadfile( String userId, String passwd, @RequestParam(value="mPhoto")MultipartFile mPhoto, HttpServletRequest request) throws IOException  {
+	public String uploadfile( String userId, @RequestParam(value="mPhoto")MultipartFile mPhoto, HttpServletRequest request) throws IOException  {
 		String filePath = null;
 		String path = null;
 		if (!mPhoto.isEmpty()) {  
 			
             try {  
                 // �ļ�����·��  
-                filePath = request.getSession().getServletContext().getRealPath("/Images")+"\\"   
-                        + mPhoto.getOriginalFilename();
-                path = "Images" + "\\"+ mPhoto.getOriginalFilename();
+                filePath = request.getSession().getServletContext().getRealPath("/")+   
+                         mPhoto.getOriginalFilename();
+                path = mPhoto.getOriginalFilename();
                 // ת���ļ�  
                 mPhoto.transferTo(new File(filePath));  
                

@@ -198,4 +198,12 @@ public class BookAction {
 		return bookListStr;
 	}
 	
+	@RequestMapping("deleteFavoriteBook")
+	@ResponseBody
+	public String deleteFavoriteBook(String userId,String indexId) {
+		boolean flag = bookService.deleteFavoriteBook(userId,indexId);
+		if (flag)
+			return "success";
+		return "fail";
+	}
 }

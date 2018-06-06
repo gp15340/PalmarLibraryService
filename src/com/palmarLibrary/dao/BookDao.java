@@ -27,5 +27,6 @@ public interface BookDao {
 	List<Map<String, Object>> getFavoriteBook(User user);
 	List<Map<String, Object>> searchLikeBookName(String bookName);
 	List<Map<String, Object>> searchLikeAuthor(String author);
+	boolean deleteFavoriteBook(String userId, String indexId);
 	
 }
