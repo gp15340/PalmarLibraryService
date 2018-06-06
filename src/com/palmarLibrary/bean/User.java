@@ -37,6 +37,8 @@ public class User {
 	joinColumns=@JoinColumn(name="userId"),
 	inverseJoinColumns=@JoinColumn(name="indexId"))
 	private Set<Book> books;
+	@OneToMany(mappedBy="user",targetEntity=Interest.class,cascade=CascadeType.ALL)
+	private Set<Interest> interests;
 	public Set<Book> getBooks() {
 		return books;
 	}
@@ -104,6 +106,13 @@ public class User {
 	public void setBorrows(Set<Borrow> borrows) {
 		this.borrows = borrows;
 	}
+	public Set<Interest> getInterests() {
+		return interests;
+	}
+	public void setInterests(Set<Interest> interests) {
+		this.interests = interests;
+	}
+	
 	
 	
 }

@@ -10,7 +10,7 @@ import com.palmarLibrary.bean.User;
 public interface BookDao {
 	List<Map<String,Object>> getHotBook();
 	List<String> getauthor();
-	String getBookDetails(Book book,String author);
+	String getBookDetails(Book book,String author,String userId);
 	List<Map<String,Object>> getcomment(Comment comment);
 	List<Map<String,Object>> location(Book book);
 	List<Map<String, Object>> getBorrowRecords(User user);
@@ -25,8 +25,12 @@ public interface BookDao {
 	List<Map<String, Object>> searchBookByAuthor(int authorId);
 	List<Map<String, Object>> getReadBook(String indexId);
 	List<Map<String, Object>> getFavoriteBook(User user);
+
+	boolean getBookMark(String indexId, String userId);
+
 	List<Map<String, Object>> searchLikeBookName(String bookName);
 	List<Map<String, Object>> searchLikeAuthor(String author);
 	boolean deleteFavoriteBook(String userId, String indexId);
+
 	
 }

@@ -45,8 +45,8 @@ public class BookService {
 	}
 
 	
-	public String getBookDetails(Book book,String author){
-		String bookList = bookDao.getBookDetails(book,author);
+	public String getBookDetails(Book book,String author,String userId){
+		String bookList = bookDao.getBookDetails(book,author,userId);
 		return bookList;
 	}
 	
@@ -115,14 +115,19 @@ public class BookService {
 		return bookList;
 	}
 
-	public List<Map<String, Object>> searchLikeBookName(String bookName) {
-		List<Map<String,Object>> bookList = bookDao.searchLikeBookName(bookName);
-		return bookList;
+	public boolean getBookMark(String indexId, String userId) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookMark(indexId,userId);
 	}
 
 	public List<Map<String, Object>> searchLikeAuthor(String author) {
-		List<Map<String,Object>> bookList = bookDao.searchLikeAuthor(author);
-		return bookList;
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Map<String, Object>> searchLikeBookName(String bookName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public boolean deleteFavoriteBook(String userId, String indexId) {

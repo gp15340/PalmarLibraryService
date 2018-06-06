@@ -92,12 +92,12 @@ public class BookAction {
 	
 	@RequestMapping("getBookDetails")
 	@ResponseBody
-	public String GetBookDetails(String bookName,String author,
+	public String GetBookDetails(String bookName,String author,String userId,
 			HttpSession session){
 		Book book = new Book();
 		book.setBookName(bookName);
 		//book.setAuthor(author);
-		String bookList = bookService.getBookDetails(book,author);
+		String bookList = bookService.getBookDetails(book,author,userId);
 		System.out.println(bookList);
 		return bookList;
 	}
@@ -176,6 +176,14 @@ public class BookAction {
 		return bookListStr;
 	}
 	
+
+	@RequestMapping("getBookMark")
+	@ResponseBody
+	public boolean getBookMark(String indexId,String userId) {
+		
+		return bookService.getBookMark(indexId,userId);
+}
+
 	@RequestMapping("searchLikeBookName")
 	@ResponseBody
 	public String searchLikeBookName(String bookName) {
@@ -196,6 +204,7 @@ public class BookAction {
 		String bookListStr = gson.toJson(bookList,type);
 		System.out.println("searchLikeAuthor:" + bookList);
 		return bookListStr;
+
 	}
 	
 	@RequestMapping("deleteFavoriteBook")
