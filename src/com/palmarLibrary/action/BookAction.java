@@ -92,12 +92,12 @@ public class BookAction {
 	
 	@RequestMapping("getBookDetails")
 	@ResponseBody
-	public String GetBookDetails(String bookName,String author,
+	public String GetBookDetails(String bookName,String author,String userId,
 			HttpSession session){
 		Book book = new Book();
 		book.setBookName(bookName);
 		//book.setAuthor(author);
-		String bookList = bookService.getBookDetails(book,author);
+		String bookList = bookService.getBookDetails(book,author,userId);
 		System.out.println(bookList);
 		return bookList;
 	}
@@ -175,4 +175,12 @@ public class BookAction {
 		System.out.println("getFavoriteBook:" + bookListStr);
 		return bookListStr;
 	}
+	
+	@RequestMapping("getBookMark")
+	@ResponseBody
+	public boolean getBookMark(String indexId,String userId) {
+		
+		return bookService.getBookMark(indexId,userId);
+	}
+	
 }

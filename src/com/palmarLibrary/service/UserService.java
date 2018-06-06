@@ -1,5 +1,8 @@
 package com.palmarLibrary.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +58,12 @@ public class UserService {
 	public User getUser(String userId) {
 		User user = userDao.getUser(userId);
 		return user;
+	}
+
+	public List<Map<String, Integer>> getInterest(String userId) {
+		// TODO Auto-generated method stub
+		return userDao.getInterest(userId);
+		
 	}
 
 }

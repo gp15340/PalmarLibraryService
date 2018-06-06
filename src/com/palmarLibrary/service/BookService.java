@@ -45,8 +45,8 @@ public class BookService {
 	}
 
 	
-	public String getBookDetails(Book book,String author){
-		String bookList = bookDao.getBookDetails(book,author);
+	public String getBookDetails(Book book,String author,String userId){
+		String bookList = bookDao.getBookDetails(book,author,userId);
 		return bookList;
 	}
 	
@@ -112,6 +112,11 @@ public class BookService {
 	public List<Map<String, Object>> getFavoriteBook(User user) {
 		List<Map<String,Object>> bookList = bookDao.getFavoriteBook(user);
 		return bookList;
+	}
+
+	public boolean getBookMark(String indexId, String userId) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookMark(indexId,userId);
 	}
 	
 }

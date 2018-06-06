@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,6 +19,7 @@ import com.palmarLibrary.bean.Author;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
 import com.palmarLibrary.bean.Comment;
+import com.palmarLibrary.bean.Interest;
 import com.palmarLibrary.bean.OnlyBook;
 import com.palmarLibrary.bean.User;
 
@@ -140,7 +140,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public String getBookDetails(Book book,String author) {
+	public String getBookDetails(Book book,String author,String userId) {
 		
 		// TODO Auto-generated method stub
 		String str = null;
@@ -159,6 +159,29 @@ public class BookDaoImpl implements BookDao {
 		List list = query1.list();
 		for (int i=0;i<list.size(); i++){
 		    BookType stu = (BookType)list.get(i);
+		    Query query3=session.createQuery("select interestId from Interest where userId=? and typeId=?");
+		    query3.setString(0, userId);
+		    query3.setInteger(1, stu.getTypeId());
+		    Interest interest1=(Interest)query3.uniqueResult();
+		    if(interest1==null) {
+		    	Interest interest2 = new Interest();
+		    	User user = new User();
+		    	user.setUserId(userId);
+		    	
+		    	interest2.setUser(user);
+		    	interest2.setBookType(stu);
+		    	interest2.setClicks(1);
+		    	
+		    	session.save(interest2);
+		    	
+		    }else {
+		    	Query query4=session.createQuery("update Interest set clicks = ? where interestId=?");
+			    query4.setInteger(0, interest1.getClicks()+1);
+			    query4.setInteger(1,interest1.getInterestId());
+			    query4.executeUpdate();
+		    }
+		    
+		    
 		    if (str == null) {
 		    	str = (String)stu.getTypeName();
 		    } else {
@@ -436,6 +459,22 @@ public class BookDaoImpl implements BookDao {
 			bookList.add(map);
 		}
 		return bookList;
+	}
+
+	@Override
+	public boolean getBookMark(String indexId, String userId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select u.books from User u where u.userId=?and u.books.indexId=?");
+		query.setString(0, userId);
+		query.setString(1,indexId);
+		Book book =(Book) query.uniqueResult();
+		if(book==null) {
+			return false;
+		}else {
+			return true;
+		}
+		
 	}
 
 

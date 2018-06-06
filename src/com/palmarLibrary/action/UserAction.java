@@ -2,11 +2,13 @@ package com.palmarLibrary.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.palmarLibrary.bean.User;
 import com.palmarLibrary.service.UserService;
 
@@ -70,10 +73,10 @@ public class UserAction {
 		if (!mPhoto.isEmpty()) {  
 			
             try {  
-                // ÎÄ¼þ±£´æÂ·¾¶  
+                // ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½  
                 filePath = request.getSession().getServletContext().getRealPath("/")   
                         + mPhoto.getOriginalFilename();  
-                // ×ª´æÎÄ¼þ  
+                // ×ªï¿½ï¿½ï¿½Ä¼ï¿½  
                 mPhoto.transferTo(new File(filePath));  
                
             } catch (Exception e) {  
@@ -127,4 +130,19 @@ public class UserAction {
 		String userStr = gson.toJson(user);
 		return userStr;
 	}
+	
+	@RequestMapping("getInterest")
+	@ResponseBody
+	public String GetInterest(String userId) {
+		
+		List<Map<String, Integer>> list =userService.getInterest(userId);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Map<String,Integer>>>(){}.getType();
+		String InterestListStr = gson.toJson(list, type);
+		
+		return InterestListStr;
+	}
+	
+	
+	
 }
