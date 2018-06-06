@@ -477,5 +477,17 @@ public class BookDaoImpl implements BookDao {
 		
 	}
 
+	@Override
+	public List<Map<String, Object>> searchLikeBookName(String bookName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Map<String, Object>> searchLikeAuthor(String author) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

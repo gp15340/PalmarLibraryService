@@ -118,5 +118,15 @@ public class BookService {
 		// TODO Auto-generated method stub
 		return bookDao.getBookMark(indexId,userId);
 	}
+
+	public List<Map<String, Object>> searchLikeAuthor(String author) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Map<String, Object>> searchLikeBookName(String bookName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

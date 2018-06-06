@@ -70,26 +70,33 @@ public class UserAction {
 	@ResponseBody
 	public String uploadfile( String userId, String passwd, @RequestParam(value="mPhoto")MultipartFile mPhoto, HttpServletRequest request) throws IOException  {
 		String filePath = null;
+		String path = null;
 		if (!mPhoto.isEmpty()) {  
 			
             try {  
                 // �ļ�����·��  
+
                 filePath = request.getSession().getServletContext().getRealPath("/")   
                         + mPhoto.getOriginalFilename();  
+
+                filePath = request.getSession().getServletContext().getRealPath("/Images")+"\\"   
+                        + mPhoto.getOriginalFilename();
+                path = "Images" + "\\"+ mPhoto.getOriginalFilename();
+
                 // ת���ļ�  
                 mPhoto.transferTo(new File(filePath));  
                
-            } catch (Exception e) {  
+            } catch (Exception e) {
                 e.printStackTrace();  
             }  
         }
 	         User user = new User();
 	         
-			user.setImgUrl(filePath);
+			user.setImgUrl(path);
 	         user.setUserId(userId);
 	         Boolean msg = userService.upload(user);
 	         if (msg) {
-					return filePath;
+					return path;
 				}
 	         return null;
 	}

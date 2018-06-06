@@ -176,11 +176,35 @@ public class BookAction {
 		return bookListStr;
 	}
 	
+
 	@RequestMapping("getBookMark")
 	@ResponseBody
 	public boolean getBookMark(String indexId,String userId) {
 		
 		return bookService.getBookMark(indexId,userId);
+}
+
+	@RequestMapping("searchLikeBookName")
+	@ResponseBody
+	public String searchLikeBookName(String bookName) {
+		List<Map<String,Object>> bookList = bookService.searchLikeBookName(bookName);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println("searchLikeBookName:" + bookListStr);
+		return bookListStr;
+	}
+	
+	@RequestMapping("searchLikeAuthor")
+	@ResponseBody
+	public String searchLikeAuthor(String author) {
+		List<Map<String,Object>> bookList = bookService.searchLikeAuthor(author);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println("searchLikeAuthor:" + bookList);
+		return bookListStr;
+
 	}
 	
 }
