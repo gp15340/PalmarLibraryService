@@ -250,18 +250,59 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public List<Map<String, Object>> selectBookByType(List<String> typeNameList) {
 		// TODO Auto-generated method stub
+		Map<String,String>bookId=new HashMap();
 		Session session = sessionFactory.getCurrentSession();
-		/*Query query = session.createQuery("select bookName,author from Book order by hot desc");
-		List<Object[]> bookList = query.list();
-		List<Map<String,Object>> list = new ArrayList();
-		for (Object[] object : bookList) {
-			Map map = new HashMap();
-			map.put("bookName", object[0]);
-			map.put("author",object[1]);
-			list.add(map);
+		for(int i=0;i<typeNameList.size();++i) {
+		System.out.println(typeNameList.get(i));
+		Query query = session.createQuery("select t.books from BookType t where t.typeName = ?");
+		query.setString(0,typeNameList.get(i));
+		List list = query.list();
+		
+		for(Object books:list) {
+			Book book = (Book)books;
+			bookId.put(book.getIndexId(),"");
+			System.out.println(book.getIndexId());
 		}
-		return list;*/
-		return null;
+		
+		}
+		
+		List<String> indexList = new ArrayList();
+		for(Map.Entry<String,String> entry : bookId.entrySet()){
+            
+               indexList.add(entry.getKey());
+           
+               
+        }
+		List<Map<String,Object>> bookList = new ArrayList();
+		String authors = null;
+		for(String indexId:indexList) {
+			Map map = new HashMap();
+			Query query1 = session.createQuery("select bookName,imgUrl,hot from Book where indexId=?");
+			query1.setString(0, indexId);
+			Object[] book2 = (Object[])query1.uniqueResult();
+			map.put("bookName", book2[0]);
+			map.put("imgUrl",book2[1]);
+			map.put("hot", book2[2]);
+			Query query2 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+			query2.setString(0,indexId);
+			List authorList = query2.list(); 
+			System.out.println(authorList.size());
+			for (Object authorName : authorList) {
+				Author author = (Author)authorName;
+			    if (authors == null) {
+			    	authors = (String)author.getAuthorName();
+			    } else {
+			    	authors += ("," + (String)author.getAuthorName());
+			    }
+			    map.put("author", authors);
+			}
+			bookList.add(map);
+			
+		}
+		
+		
+
+		return bookList;
 	}
 
 	@Override
