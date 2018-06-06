@@ -1,7 +1,9 @@
 package com.palmarLibrary.dao;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.palmarLibrary.bean.Interest;
 import com.palmarLibrary.bean.User;
 
 @Repository
@@ -79,6 +82,7 @@ public class UserDaoImpl implements UserDao {
 			map.put("department", u.getDepartment());
 			map.put("userName",u.getUserName());
 			map.put("email", u.getEmail());
+			map.put("imgUrl",u.getImgUrl());
 			Gson gson = new Gson();
 			Type type = new TypeToken<Map<String,Object>>(){}.getType();
 			String userStr = gson.toJson(map,type);
@@ -117,6 +121,32 @@ public class UserDaoImpl implements UserDao {
 		if (res > 0)
 			return true;
 		return false;
+	}
+
+	@Override
+	public List<Map<String, Integer>> getInterest(String userId) {
+		// TODO Auto-generated method stub
+		List<Map<String,Integer>> list = new ArrayList();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select interestId from Interest where userId =? order by clicks desc");
+		query.setString(0, userId);
+		List<Interest> interestList = query.list();
+		for (Interest interest : interestList) {
+			Query query1 = session.createQuery("select typeName from BookType where typeId=?");
+			query1.setInteger(0, interest.getBookType().getTypeId());
+			String Tname = (String)query1.uniqueResult();
+			
+			Query query2 = session.createQuery("select count(*) from Book where typeId=?");
+			query2.setInteger(0, interest.getBookType().getTypeId());
+			Integer count = ((Number)query2.uniqueResult()).intValue();
+			
+			Map<String,Integer>map=new HashMap();
+			map.put(Tname, count);
+			
+			list.add(map);
+		}
+		
+		return list;
 	}
 
 	

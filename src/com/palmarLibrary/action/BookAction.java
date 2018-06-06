@@ -41,11 +41,16 @@ public class BookAction {
 	
 	@RequestMapping("selectBookByType")
 	@ResponseBody
-	public String selectBookByType(List<String> typeNameList) {
-		List<Map<String,Object>> bookList = bookService.selectBookByType(typeNameList);
+	public String selectBookByType(String typeNameList) {
+	
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Book>>(){}.getType();
-		String bookListStr = gson.toJson(bookList,type);
+		Type type = new TypeToken<List<String>>(){}.getType();
+		List<String>TypeList =gson.fromJson(typeNameList,type);
+      
+		List<Map<String,Object>> bookList = bookService.selectBookByType(TypeList);
+		Gson gson1 = new Gson();
+		Type type1 = new TypeToken<List<Book>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type1);
 		System.out.println(bookListStr);
 		return bookListStr;
 	}
@@ -87,12 +92,12 @@ public class BookAction {
 	
 	@RequestMapping("getBookDetails")
 	@ResponseBody
-	public String GetBookDetails(String bookName,String author,
+	public String GetBookDetails(String bookName,String author,String userId,
 			HttpSession session){
 		Book book = new Book();
 		book.setBookName(bookName);
 		//book.setAuthor(author);
-		String bookList = bookService.getBookDetails(book,author);
+		String bookList = bookService.getBookDetails(book,author,userId);
 		System.out.println(bookList);
 		return bookList;
 	}
@@ -171,6 +176,7 @@ public class BookAction {
 		return bookListStr;
 	}
 	
+
 	@RequestMapping("insetFavoriteBook")
 	@ResponseBody
 	public String insetFavoriteBook(String userId,String indexId) {
@@ -183,4 +189,45 @@ public class BookAction {
 	}
 	
 	
+
+
+	@RequestMapping("getBookMark")
+	@ResponseBody
+	public boolean getBookMark(String indexId,String userId) {
+		
+		return bookService.getBookMark(indexId,userId);
+}
+
+	@RequestMapping("searchLikeBookName")
+	@ResponseBody
+	public String searchLikeBookName(String bookName) {
+		List<Map<String,Object>> bookList = bookService.searchLikeBookName(bookName);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println("searchLikeBookName:" + bookListStr);
+		return bookListStr;
+	}
+	
+	@RequestMapping("searchLikeAuthor")
+	@ResponseBody
+	public String searchLikeAuthor(String author) {
+		List<Map<String,Object>> bookList = bookService.searchLikeAuthor(author);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
+		String bookListStr = gson.toJson(bookList,type);
+		System.out.println("searchLikeAuthor:" + bookList);
+		return bookListStr;
+
+	}
+	
+	@RequestMapping("deleteFavoriteBook")
+	@ResponseBody
+	public String deleteFavoriteBook(String userId,String indexId) {
+		boolean flag = bookService.deleteFavoriteBook(userId,indexId);
+		if (flag)
+			return "success";
+		return "fail";
+	}
+
 }

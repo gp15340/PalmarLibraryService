@@ -45,8 +45,8 @@ public class BookService {
 	}
 
 	
-	public String getBookDetails(Book book,String author){
-		String bookList = bookDao.getBookDetails(book,author);
+	public String getBookDetails(Book book,String author,String userId){
+		String bookList = bookDao.getBookDetails(book,author,userId);
 		return bookList;
 	}
 	
@@ -104,6 +104,7 @@ public class BookService {
 				map.put("bookName", map1.get("bookName"));
 				map.put("author", map1.get("author"));
 				map.put("imgUrl", map1.get("imgUrl"));
+				map.put("hot", map1.get("hot"));
 			}
 		}
 		return bookList;
@@ -113,6 +114,7 @@ public class BookService {
 		List<Map<String,Object>> bookList = bookDao.getFavoriteBook(user);
 		return bookList;
 	}
+<<<<<<< HEAD
 	public Boolean insetFavoriteBook(User user,Book book) {
 		Boolean fla = bookDao.insetFavoriteBook(user,book);
 		if(fla) {
@@ -120,6 +122,27 @@ public class BookService {
 		}
 		return false;
 		
+=======
+
+	public boolean getBookMark(String indexId, String userId) {
+		// TODO Auto-generated method stub
+		return bookDao.getBookMark(indexId,userId);
+	}
+
+	public List<Map<String, Object>> searchLikeAuthor(String author) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Map<String, Object>> searchLikeBookName(String bookName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean deleteFavoriteBook(String userId, String indexId) {
+		boolean flag = bookDao.deleteFavoriteBook(userId,indexId);
+		return flag;
+>>>>>>> branch 'master' of https://github.com/wanghui321/PalmarLibraryService.git
 	}
 	
 }

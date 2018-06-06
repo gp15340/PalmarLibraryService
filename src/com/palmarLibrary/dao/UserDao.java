@@ -1,5 +1,8 @@
 package com.palmarLibrary.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.palmarLibrary.bean.User;
 
 public interface UserDao {
@@ -14,5 +17,7 @@ public interface UserDao {
 	String Login(User user, String schoolId);
 	
 	User getUser(String userId);
+
+	List<Map<String,Integer>> getInterest(String userId);
 
 }

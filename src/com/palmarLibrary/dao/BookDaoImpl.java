@@ -21,6 +21,7 @@ import com.palmarLibrary.bean.Author;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
 import com.palmarLibrary.bean.Comment;
+import com.palmarLibrary.bean.Interest;
 import com.palmarLibrary.bean.OnlyBook;
 import com.palmarLibrary.bean.User;
 
@@ -141,7 +142,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public String getBookDetails(Book book,String author) {
+	public String getBookDetails(Book book,String author,String userId) {
 		
 		// TODO Auto-generated method stub
 		String str = null;
@@ -160,6 +161,29 @@ public class BookDaoImpl implements BookDao {
 		List list = query1.list();
 		for (int i=0;i<list.size(); i++){
 		    BookType stu = (BookType)list.get(i);
+		    Query query3=session.createQuery("select interestId from Interest where userId=? and typeId=?");
+		    query3.setString(0, userId);
+		    query3.setInteger(1, stu.getTypeId());
+		    Interest interest1=(Interest)query3.uniqueResult();
+		    if(interest1==null) {
+		    	Interest interest2 = new Interest();
+		    	User user = new User();
+		    	user.setUserId(userId);
+		    	
+		    	interest2.setUser(user);
+		    	interest2.setBookType(stu);
+		    	interest2.setClicks(1);
+		    	
+		    	session.save(interest2);
+		    	
+		    }else {
+		    	Query query4=session.createQuery("update Interest set clicks = ? where interestId=?");
+			    query4.setInteger(0, interest1.getClicks()+1);
+			    query4.setInteger(1,interest1.getInterestId());
+			    query4.executeUpdate();
+		    }
+		    
+		    
 		    if (str == null) {
 		    	str = (String)stu.getTypeName();
 		    } else {
@@ -251,18 +275,59 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public List<Map<String, Object>> selectBookByType(List<String> typeNameList) {
 		// TODO Auto-generated method stub
+		Map<String,String>bookId=new HashMap();
 		Session session = sessionFactory.getCurrentSession();
-		/*Query query = session.createQuery("select bookName,author from Book order by hot desc");
-		List<Object[]> bookList = query.list();
-		List<Map<String,Object>> list = new ArrayList();
-		for (Object[] object : bookList) {
-			Map map = new HashMap();
-			map.put("bookName", object[0]);
-			map.put("author",object[1]);
-			list.add(map);
+		for(int i=0;i<typeNameList.size();++i) {
+		System.out.println(typeNameList.get(i));
+		Query query = session.createQuery("select t.books from BookType t where t.typeName = ?");
+		query.setString(0,typeNameList.get(i));
+		List list = query.list();
+		
+		for(Object books:list) {
+			Book book = (Book)books;
+			bookId.put(book.getIndexId(),"");
+			System.out.println(book.getIndexId());
 		}
-		return list;*/
-		return null;
+		
+		}
+		
+		List<String> indexList = new ArrayList();
+		for(Map.Entry<String,String> entry : bookId.entrySet()){
+            
+               indexList.add(entry.getKey());
+           
+               
+        }
+		List<Map<String,Object>> bookList = new ArrayList();
+		String authors = null;
+		for(String indexId:indexList) {
+			Map map = new HashMap();
+			Query query1 = session.createQuery("select bookName,imgUrl,hot from Book where indexId=?");
+			query1.setString(0, indexId);
+			Object[] book2 = (Object[])query1.uniqueResult();
+			map.put("bookName", book2[0]);
+			map.put("imgUrl",book2[1]);
+			map.put("hot", book2[2]);
+			Query query2 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+			query2.setString(0,indexId);
+			List authorList = query2.list(); 
+			System.out.println(authorList.size());
+			for (Object authorName : authorList) {
+				Author author = (Author)authorName;
+			    if (authors == null) {
+			    	authors = (String)author.getAuthorName();
+			    } else {
+			    	authors += ("," + (String)author.getAuthorName());
+			    }
+			    map.put("author", authors);
+			}
+			bookList.add(map);
+			
+		}
+		
+		
+
+		return bookList;
 	}
 
 	@Override
@@ -347,7 +412,7 @@ public class BookDaoImpl implements BookDao {
 		List<Map<String,Object>> list = new ArrayList();
 		Map map = new HashMap();
 		map.put("bookName", book[0]);
-		map.put("imtUrl", book[1]);
+		map.put("imgUrl", book[1]);
 		map.put("hot",book[2]);
 		Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
 		query1.setString(0,indexId);
@@ -397,6 +462,7 @@ public class BookDaoImpl implements BookDao {
 		}
 		return bookList;
 	}
+
 	
 	
 	public Boolean insetFavoriteBook(User user, Book book) {
@@ -405,7 +471,51 @@ public class BookDaoImpl implements BookDao {
 		 books.add(book);
 		 user.setBooks(books);//建立关联关系
 		 session.save(user);
+		return true;
+	}
+
+
+	@Override
+	public boolean getBookMark(String indexId, String userId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select u.books from User u where u.userId=?and u.books.indexId=?");
+		query.setString(0, userId);
+		query.setString(1,indexId);
+		Book book =(Book) query.uniqueResult();
+		if(book==null) {
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
+
+	@Override
+	public List<Map<String, Object>> searchLikeBookName(String bookName) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Map<String, Object>> searchLikeAuthor(String author) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteFavoriteBook(String userId, String indexId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("delete u.books from User u "
+				+ "where u.userId=? and u.books.indexId=?");
+		query.setString(0, userId);
+		query.setString(1, indexId);
+		int ref = query.executeUpdate();
+		if (ref>0) 
+			return true;
+		return false;
+	}
+
+
 
 }
