@@ -161,11 +161,13 @@ public class BookDaoImpl implements BookDao {
 		List list = query1.list();
 		for (int i=0;i<list.size(); i++){
 		    BookType stu = (BookType)list.get(i);
-		    Query query3=session.createQuery("select interestId from Interest where userId=? and typeId=?");
+		    Query query3=session.createQuery("from Interest where userId=? and typeId=?");
 		    query3.setString(0, userId);
 		    query3.setInteger(1, stu.getTypeId());
 		    Interest interest1=(Interest)query3.uniqueResult();
+		    System.out.println("ä¹‹å‰");
 		    if(interest1==null) {
+		    	System.out.println("ä¹‹åŽ");
 		    	Interest interest2 = new Interest();
 		    	User user = new User();
 		    	user.setUserId(userId);
@@ -177,10 +179,12 @@ public class BookDaoImpl implements BookDao {
 		    	session.save(interest2);
 		    	
 		    }else {
+		    	System.out.println("else");
 		    	Query query4=session.createQuery("update Interest set clicks = ? where interestId=?");
 			    query4.setInteger(0, interest1.getClicks()+1);
 			    query4.setInteger(1,interest1.getInterestId());
 			    query4.executeUpdate();
+			    System.out.println("elseä¹‹åŽ");
 		    }
 		    
 		    
@@ -469,7 +473,7 @@ public class BookDaoImpl implements BookDao {
 		Session session = sessionFactory.getCurrentSession();
 		 Set<Book> books = new HashSet<Book>();
 		 books.add(book);
-		 user.setBooks(books);//½¨Á¢¹ØÁª¹ØÏµ
+		 user.setBooks(books);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµ
 		 session.save(user);
 		return true;
 	}
@@ -479,16 +483,17 @@ public class BookDaoImpl implements BookDao {
 	public boolean getBookMark(String indexId, String userId) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select u.books from User u where u.userId=?and u.books.indexId=?");
+		Query query = session.createQuery("select u.books from User u where u.userId=?");
 		query.setString(0, userId);
-		query.setString(1,indexId);
-		Book book =(Book) query.uniqueResult();
-		if(book==null) {
-			return false;
-		}else {
-			return true;
+		List list = query.list();
+		for (Object object : list) {
+			Book book = (Book) object;
+			String indexId1 = book.getIndexId();
+			if (indexId.equals(indexId1)) {
+				return true;
+			}
 		}
-		
+		return false;
 	}
 
 	@Override
@@ -542,14 +547,19 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public boolean deleteFavoriteBook(String userId, String indexId) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("delete u.books from User u "
-				+ "where u.userId=? and u.books.indexId=?");
+		Query query = session.createQuery("from User u "
+				+ "where u.userId=?");
 		query.setString(0, userId);
-		query.setString(1, indexId);
-		int ref = query.executeUpdate();
-		if (ref>0) 
-			return true;
-		return false;
+		User user = (User)query.uniqueResult();
+		Set<Book> books = user.getBooks();
+		for (Book book : books) {
+			if (book.getIndexId().equals(indexId)) {
+				book.getUsers().remove(user);
+				session.save(user);
+			}
+		}
+		
+		return true;
 	}
 
 

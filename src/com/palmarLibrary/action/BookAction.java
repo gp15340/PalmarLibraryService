@@ -184,8 +184,10 @@ public class BookAction {
 		Book book = new Book();
 		user.setUserId(userId);
 		book.setIndexId(indexId);
-		Boolean btn = BookService.insetFavoriteBook(user.book);
-		return "success";
+		Boolean btn = bookService.insetFavoriteBook(user,book);
+		if (btn)
+			return "success";
+		return "fail";
 	}
 	
 	
@@ -193,9 +195,11 @@ public class BookAction {
 
 	@RequestMapping("getBookMark")
 	@ResponseBody
-	public boolean getBookMark(String indexId,String userId) {
-		
-		return bookService.getBookMark(indexId,userId);
+	public String getBookMark(String indexId,String userId) {
+		boolean flag = bookService.getBookMark(indexId,userId);
+		if (flag)
+			return "yes";
+		return "no";
 }
 
 	@RequestMapping("searchLikeBookName")
