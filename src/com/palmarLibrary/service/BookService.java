@@ -113,5 +113,13 @@ public class BookService {
 		List<Map<String,Object>> bookList = bookDao.getFavoriteBook(user);
 		return bookList;
 	}
+	public Boolean insetFavoriteBook(User user,Book book) {
+		Boolean fla = bookDao.insetFavoriteBook(user,book);
+		if(fla) {
+			return true;
+		}
+		return false;
+		
+	}
 	
 }

@@ -170,4 +170,17 @@ public class BookAction {
 		System.out.println("getFavoriteBook:" + bookListStr);
 		return bookListStr;
 	}
+	
+	@RequestMapping("insetFavoriteBook")
+	@ResponseBody
+	public String insetFavoriteBook(String userId,String indexId) {
+		User user = new User();
+		Book book = new Book();
+		user.setUserId(userId);
+		book.setIndexId(indexId);
+		Boolean btn = BookService.insetFavoriteBook(user.book);
+		return "success";
+	}
+	
+	
 }

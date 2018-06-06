@@ -25,5 +25,6 @@ public interface BookDao {
 	List<Map<String, Object>> searchBookByAuthor(int authorId);
 	List<Map<String, Object>> getReadBook(String indexId);
 	List<Map<String, Object>> getFavoriteBook(User user);
+	Boolean insetFavoriteBook(User user, Book book);
 	
 }
