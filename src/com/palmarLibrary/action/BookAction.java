@@ -177,6 +177,20 @@ public class BookAction {
 	}
 	
 
+	@RequestMapping("insetFavoriteBook")
+	@ResponseBody
+	public String insetFavoriteBook(String userId,String indexId) {
+		User user = new User();
+		Book book = new Book();
+		user.setUserId(userId);
+		book.setIndexId(indexId);
+		Boolean btn = BookService.insetFavoriteBook(user.book);
+		return "success";
+	}
+	
+	
+
+
 	@RequestMapping("getBookMark")
 	@ResponseBody
 	public boolean getBookMark(String indexId,String userId) {
@@ -215,4 +229,5 @@ public class BookAction {
 			return "success";
 		return "fail";
 	}
+
 }

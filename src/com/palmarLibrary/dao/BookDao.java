@@ -26,11 +26,15 @@ public interface BookDao {
 	List<Map<String, Object>> getReadBook(String indexId);
 	List<Map<String, Object>> getFavoriteBook(User user);
 
+	Boolean insetFavoriteBook(User user, Book book);
+
+
 	boolean getBookMark(String indexId, String userId);
 
 	List<Map<String, Object>> searchLikeBookName(String bookName);
 	List<Map<String, Object>> searchLikeAuthor(String author);
 	boolean deleteFavoriteBook(String userId, String indexId);
+
 
 	
 }

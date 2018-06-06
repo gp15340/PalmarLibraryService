@@ -114,6 +114,15 @@ public class BookService {
 		List<Map<String,Object>> bookList = bookDao.getFavoriteBook(user);
 		return bookList;
 	}
+<<<<<<< HEAD
+	public Boolean insetFavoriteBook(User user,Book book) {
+		Boolean fla = bookDao.insetFavoriteBook(user,book);
+		if(fla) {
+			return true;
+		}
+		return false;
+		
+=======
 
 	public boolean getBookMark(String indexId, String userId) {
 		// TODO Auto-generated method stub
@@ -133,6 +142,7 @@ public class BookService {
 	public boolean deleteFavoriteBook(String userId, String indexId) {
 		boolean flag = bookDao.deleteFavoriteBook(userId,indexId);
 		return flag;
+>>>>>>> branch 'master' of https://github.com/wanghui321/PalmarLibraryService.git
 	}
 	
 }

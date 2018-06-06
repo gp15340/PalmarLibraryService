@@ -3,8 +3,10 @@ package com.palmarLibrary.dao;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -461,6 +463,18 @@ public class BookDaoImpl implements BookDao {
 		return bookList;
 	}
 
+	
+	
+	public Boolean insetFavoriteBook(User user, Book book) {
+		Session session = sessionFactory.getCurrentSession();
+		 Set<Book> books = new HashSet<Book>();
+		 books.add(book);
+		 user.setBooks(books);//建立关联关系
+		 session.save(user);
+		return true;
+	}
+
+
 	@Override
 	public boolean getBookMark(String indexId, String userId) {
 		// TODO Auto-generated method stub
@@ -537,6 +551,7 @@ public class BookDaoImpl implements BookDao {
 			return true;
 		return false;
 	}
+
 
 
 }
