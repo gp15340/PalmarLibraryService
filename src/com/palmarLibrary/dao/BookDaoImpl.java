@@ -479,14 +479,50 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public List<Map<String, Object>> searchLikeBookName(String bookName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Map<String,Object>> bookList = new ArrayList();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select bookName,imgUrl,hot,indexId from Book "
+				+ "where bookName like '%" + bookName + "%'");
+		List<Object[]> list = query.list();
+		for (Object[] object : list) {
+			Map map = new HashMap();
+			map.put("bookName", object[0]);
+			map.put("imgUrl", object[1]);
+			map.put("hot", object[2]);
+			String indexId = (String)object[3];
+			Query query1 = session.createQuery("select b.authors from Book b where b.indexId = ?");
+			query1.setString(0,indexId);
+			List authorList = query1.list(); 
+			System.out.println(authorList.size());
+			String authors = null;
+			for (Object authorName : authorList) {
+				Author author = (Author)authorName;
+			    if (authors == null) {
+			    	authors = (String)author.getAuthorName();
+			    } else {
+			    	authors += ("," + (String)author.getAuthorName());
+			    }   
+			}
+			map.put("author", authors);
+			bookList.add(map);
+		}
+		return bookList;
 	}
 
 	@Override
 	public List<Map<String, Object>> searchLikeAuthor(String author) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Map<String,Object>> bookList = new ArrayList();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("select authorId from Author where"
+				+ "authorName like '%" + author + "%'");
+		List<Object[]> lists = query.list();
+		for (Object[] object : lists) {
+			Map map = new HashMap();
+			int authorId = (int)object[0];
+			List<Map<String,Object>> list = searchBookByAuthor(authorId);
+			bookList.addAll(list);
+		}
+		return bookList;
 	}
 
 	@Override
