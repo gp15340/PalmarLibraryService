@@ -113,5 +113,15 @@ public class BookService {
 		List<Map<String,Object>> bookList = bookDao.getFavoriteBook(user);
 		return bookList;
 	}
+
+	public List<Map<String, Object>> searchLikeBookName(String bookName) {
+		List<Map<String,Object>> bookList = bookDao.searchLikeBookName(bookName);
+		return bookList;
+	}
+
+	public List<Map<String, Object>> searchLikeAuthor(String author) {
+		List<Map<String,Object>> bookList = bookDao.searchLikeAuthor(author);
+		return bookList;
+	}
 	
 }
