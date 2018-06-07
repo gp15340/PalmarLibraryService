@@ -180,6 +180,7 @@ public class BookAction {
 	@RequestMapping("insetFavoriteBook")
 	@ResponseBody
 	public String insetFavoriteBook(String userId,String indexId) {
+		System.out.println("userId=:" + userId);
 		User user = new User();
 		Book book = new Book();
 		user.setUserId(userId);

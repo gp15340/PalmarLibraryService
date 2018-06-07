@@ -470,11 +470,14 @@ public class BookDaoImpl implements BookDao {
 	
 	
 	public Boolean insetFavoriteBook(User user, Book book) {
+		System.out.println("userId:" + user.getUserId());
 		Session session = sessionFactory.getCurrentSession();
-		 Set<Book> books = new HashSet<Book>();
-		 books.add(book);
-		 user.setBooks(books);//����������ϵ
-		 session.save(user);
+		Query query = session.createQuery("from User where userId = ?");
+		query.setString(0, user.getUserId());
+		User user1 = (User)query.uniqueResult();
+		System.out.println("user1的大小：" + user1.getBooks().size());
+		user1.getBooks().add(book);
+		session.save(user1);
 		return true;
 	}
 
@@ -554,12 +557,13 @@ public class BookDaoImpl implements BookDao {
 		Set<Book> books = user.getBooks();
 		for (Book book : books) {
 			if (book.getIndexId().equals(indexId)) {
-				book.getUsers().remove(user);
+				user.getBooks().remove(book);
 				session.save(user);
+				return true;
 			}
 		}
 		
-		return true;
+		return false;
 	}
 
 
