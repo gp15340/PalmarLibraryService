@@ -18,6 +18,6 @@ public interface UserDao {
 	
 	User getUser(String userId);
 
-	List<Map<String,Integer>> getInterest(String userId);
+	List<Map<String,Object>> getInterest(String userId);
 
 }

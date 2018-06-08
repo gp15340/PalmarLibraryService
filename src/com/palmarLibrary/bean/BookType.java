@@ -27,6 +27,12 @@ public class BookType {
 	public String getTypeName() {
 		return typeName;
 	}
+	public Set<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(Set<Book> books) {
+		this.books = books;
+	}
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}

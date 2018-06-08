@@ -60,7 +60,7 @@ public class UserService {
 		return user;
 	}
 
-	public List<Map<String, Integer>> getInterest(String userId) {
+	public List<Map<String, Object>> getInterest(String userId) {
 		// TODO Auto-generated method stub
 		return userDao.getInterest(userId);
 		

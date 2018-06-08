@@ -137,11 +137,11 @@ public class UserAction {
 	@ResponseBody
 	public String GetInterest(String userId) {
 		
-		List<Map<String, Integer>> list =userService.getInterest(userId);
+		List<Map<String, Object>> list =userService.getInterest(userId);
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Map<String,Integer>>>(){}.getType();
+		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
 		String InterestListStr = gson.toJson(list, type);
-		
+		System.out.println("interestStr:" + InterestListStr);
 		return InterestListStr;
 	}
 	

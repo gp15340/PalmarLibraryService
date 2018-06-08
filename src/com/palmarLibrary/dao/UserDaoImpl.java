@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.palmarLibrary.bean.Book;
+import com.palmarLibrary.bean.BookType;
 import com.palmarLibrary.bean.Interest;
 import com.palmarLibrary.bean.User;
 
@@ -124,11 +127,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<Map<String, Integer>> getInterest(String userId) {
+	public List<Map<String, Object>> getInterest(String userId) {
 		// TODO Auto-generated method stub
-		List<Map<String,Integer>> list = new ArrayList();
+		List<Map<String,Object>> list = new ArrayList();
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select interestId from Interest where userId =? order by clicks desc");
+		Query query = session.createQuery("from Interest where userId =? order by clicks desc");
 		query.setString(0, userId);
 		List<Interest> interestList = query.list();
 		for (Interest interest : interestList) {
@@ -136,12 +139,15 @@ public class UserDaoImpl implements UserDao {
 			query1.setInteger(0, interest.getBookType().getTypeId());
 			String Tname = (String)query1.uniqueResult();
 			
-			Query query2 = session.createQuery("select count(*) from Book where typeId=?");
+			Query query2 = session.createQuery("from BookType where typeId=?");
 			query2.setInteger(0, interest.getBookType().getTypeId());
-			Integer count = ((Number)query2.uniqueResult()).intValue();
+			BookType bookType = (BookType)query2.uniqueResult();
+			Set<Book> books = bookType.getBooks();
+			System.out.println("数量：" + books.size());
 			
-			Map<String,Integer>map=new HashMap();
-			map.put(Tname, count);
+			Map<String,Object>map=new HashMap();
+			map.put("typeName", Tname);
+			map.put("number",books.size());
 			
 			list.add(map);
 		}
