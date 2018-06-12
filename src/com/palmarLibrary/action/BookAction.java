@@ -206,6 +206,7 @@ public class BookAction {
 	@RequestMapping("searchLikeBookName")
 	@ResponseBody
 	public String searchLikeBookName(String bookName) {
+		
 		List<Map<String,Object>> bookList = bookService.searchLikeBookName(bookName);
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();
@@ -217,6 +218,7 @@ public class BookAction {
 	@RequestMapping("searchLikeAuthor")
 	@ResponseBody
 	public String searchLikeAuthor(String author) {
+		System.out.println("bookname"+author);
 		List<Map<String,Object>> bookList = bookService.searchLikeAuthor(author);
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<Map<String,Object>>>(){}.getType();

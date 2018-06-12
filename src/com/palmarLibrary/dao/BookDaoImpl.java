@@ -535,12 +535,10 @@ public class BookDaoImpl implements BookDao {
 	public List<Map<String, Object>> searchLikeAuthor(String author) {
 		List<Map<String,Object>> bookList = new ArrayList();
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("select authorId from Author where"
-				+ "authorName like '%" + author + "%'");
-		List<Object[]> lists = query.list();
-		for (Object[] object : lists) {
-			Map map = new HashMap();
-			int authorId = (int)object[0];
+		Query query = session.createQuery("select authorId from Author "
+				+ "where authorName like '%" + author + "%'");
+		List<Integer> lists = query.list();
+		for (Integer authorId : lists) {
 			List<Map<String,Object>> list = searchBookByAuthor(authorId);
 			bookList.addAll(list);
 		}
