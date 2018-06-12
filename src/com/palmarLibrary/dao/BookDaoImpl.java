@@ -1,9 +1,10 @@
 package com.palmarLibrary.dao;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -225,10 +226,17 @@ public class BookDaoImpl implements BookDao {
 		System.out.println("" + bookList.size());
 		List<Map<String,Object>> list = new ArrayList();
 		for (Object[] object : bookList) {
+			Date date1 = new Date();
+			Date date2 = new Date();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			date1= (Date)object[1];
+			date2 = (Date)object[2];
+			System.out.println(df.format(date1));
+			System.out.println(df.format(date2));
 			Map map = new HashMap();
 			map.put("bookId",object[0]);
-			map.put("borrowDate",object[1]);
-			map.put("returnDate",object[2]);
+			map.put("borrowDate",df.format(date1));
+			map.put("returnDate",df.format(date2));
 			map.put("number", object[3]);
 			list.add(map);
 		}
