@@ -3,11 +3,14 @@ package com.palmarLibrary.dao;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -570,6 +573,28 @@ public class BookDaoImpl implements BookDao {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public Map<String, Object> addBorrowNumber(String userId, Integer bookId, Integer number,Date returnTime) {
+		Session session = sessionFactory.getCurrentSession();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(returnTime);
+		calendar.add(Calendar.DAY_OF_YEAR, 15);
+		Date newDate = calendar.getTime();
+		Query query = session.createQuery("update Borrow b set b.borrowNumber = ?, b.returnDate = ? where "
+				+ "b.onlyBook.bookId = ? and b.user.userId = ?");
+		query.setInteger(0, number+1);
+		query.setDate(1, newDate);
+		query.setInteger(2, bookId);
+		query.setString(3,userId);
+		query.executeUpdate();
+		Map<String,Object> map = new HashMap();
+		String date = format.format(newDate);
+		map.put("returnDate",date);
+		map.put("number", number+1);
+		return map;
 	}
 
 

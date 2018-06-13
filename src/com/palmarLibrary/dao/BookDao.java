@@ -1,5 +1,6 @@
 package com.palmarLibrary.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public interface BookDao {
 	List<Map<String, Object>> searchLikeBookName(String bookName);
 	List<Map<String, Object>> searchLikeAuthor(String author);
 	boolean deleteFavoriteBook(String userId, String indexId);
+	Map<String, Object> addBorrowNumber(String userId, Integer bookId, Integer number,Date returnTime);
 
 
 	

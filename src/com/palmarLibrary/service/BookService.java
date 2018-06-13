@@ -1,5 +1,6 @@
 package com.palmarLibrary.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -141,6 +142,11 @@ public class BookService {
 	public boolean deleteFavoriteBook(String userId, String indexId) {
 		boolean flag = bookDao.deleteFavoriteBook(userId,indexId);
 		return flag;
+	}
+
+	public Map<String, Object> addBorrowNumbre(String userId, Integer bookId, Integer number,Date returnTime) {
+		Map<String,Object> map = bookDao.addBorrowNumber(userId,bookId,number,returnTime);
+		return map;
 	}
 	
 }

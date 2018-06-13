@@ -1,6 +1,7 @@
 package com.palmarLibrary.action;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -235,6 +236,28 @@ public class BookAction {
 		if (flag)
 			return "success";
 		return "fail";
+	}
+	
+	@RequestMapping("addBorrowNumber")
+	@ResponseBody
+	public String addBorrowNumber(String userId,String bookId,String number,String returnTime) {
+		SimpleDateFormat returnTime1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date returnTime2 = null;
+		try {
+			returnTime2 = returnTime1.parse(returnTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Double bookId2 = Double.parseDouble(bookId);
+		Integer bookId1 = bookId2.intValue();
+		Double number2 = Double.parseDouble(number);
+		Integer number1 = number2.intValue();
+		Map<String,Object> map = bookService.addBorrowNumbre(userId,bookId1,number1,returnTime2);
+		Gson gson = new Gson();
+		Type type = new TypeToken<Map<String,Object>>(){}.getType();
+		String msg = gson.toJson(map, type);
+		return msg;
 	}
 
 }
