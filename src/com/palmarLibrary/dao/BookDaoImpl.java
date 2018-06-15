@@ -335,6 +335,7 @@ public class BookDaoImpl implements BookDao {
 			    	authors += ("," + (String)author.getAuthorName());
 			    }
 			    map.put("author", authors);
+			    authors = null;
 			}
 			bookList.add(map);
 			
