@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.palmarLibrary.bean.Advice;
 import com.palmarLibrary.bean.Book;
 import com.palmarLibrary.bean.BookType;
 import com.palmarLibrary.bean.Interest;
@@ -153,6 +154,13 @@ public class UserDaoImpl implements UserDao {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public boolean addAdvice(Advice advices) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(advices);
+		return true;
 	}
 
 	

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.palmarLibrary.bean.Advice;
 import com.palmarLibrary.bean.User;
 import com.palmarLibrary.dao.SchoolDao;
 import com.palmarLibrary.dao.UserDao;
@@ -64,6 +65,16 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userDao.getInterest(userId);
 		
+	}
+
+	public boolean addAdvice(String userId, String advice, String time) {
+		User user = userDao.getUser(userId);
+		Advice advices = new Advice();
+		advices.setUser(user);
+		advices.setAdvice(advice);
+		advices.setTime(time);
+		userDao.addAdvice(advices);
+		return true;
 	}
 
 }

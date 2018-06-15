@@ -39,6 +39,14 @@ public class User {
 	private Set<Book> books;
 	@OneToMany(mappedBy="user",targetEntity=Interest.class,cascade=CascadeType.ALL)
 	private Set<Interest> interests;
+	@OneToMany(mappedBy="user",targetEntity=Advice.class,cascade=CascadeType.ALL)
+	private Set<Advice> advices;
+	public Set<Advice> getAdvices() {
+		return advices;
+	}
+	public void setAdvices(Set<Advice> advices) {
+		this.advices = advices;
+	}
 	public Set<Book> getBooks() {
 		return books;
 	}

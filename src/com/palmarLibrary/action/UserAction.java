@@ -3,6 +3,8 @@ package com.palmarLibrary.action;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +73,7 @@ public class UserAction {
 	public String uploadfile( String userId, @RequestParam(value="mPhoto")MultipartFile mPhoto, HttpServletRequest request) throws IOException  {
 		String filePath = null;
 		String path = null;
-		if (!mPhoto.isEmpty()) {  
+		if (!mPhoto.isEmpty()) {
 			
             try {  
                 // �ļ�����·��  
@@ -145,6 +147,13 @@ public class UserAction {
 		return InterestListStr;
 	}
 	
-	
+	@RequestMapping("submitAdvise")
+	@ResponseBody
+	public String addAdvice(String userId,String advise) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = df.format(new Date());
+        userService.addAdvice(userId,advise,time);
+		return "yes";
+	}
 	
 }

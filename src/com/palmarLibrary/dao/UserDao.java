@@ -3,6 +3,7 @@ package com.palmarLibrary.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.palmarLibrary.bean.Advice;
 import com.palmarLibrary.bean.User;
 
 public interface UserDao {
@@ -19,5 +20,7 @@ public interface UserDao {
 	User getUser(String userId);
 
 	List<Map<String,Object>> getInterest(String userId);
+
+	boolean addAdvice(Advice advices);
 
 }
